@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RichDomainStore.Catalog.Domain;
+using RichDomainStore.Catalog.Domain.Entities;
 using RichDomainStore.Core.Data;
 
 namespace RichDomainStore.Catalog.Data

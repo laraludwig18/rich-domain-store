@@ -1,9 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using RichDomainStore.Catalog.Domain.Events;
+using RichDomainStore.Catalog.Domain.Interfaces;
 using RichDomainStore.Core.Bus;
 
-namespace RichDomainStore.Catalog.Domain
+namespace RichDomainStore.Catalog.Domain.Services
 {
     public class StockService : IStockService
     {
@@ -16,9 +17,9 @@ namespace RichDomainStore.Catalog.Domain
             _bus = bus;
         }
 
-        public async Task<bool> DebitStock(Guid productId, int quantity)
+        public async Task<bool> DebitStockAsync(Guid productId, int quantity)
         {
-            var product = await _productRepository.GetById(productId).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(false);
 
             if (product == null) return false;
 
@@ -35,9 +36,9 @@ namespace RichDomainStore.Catalog.Domain
             return await _productRepository.UnitOfWork.Commit().ConfigureAwait(false);
         }
 
-        public async Task<bool> ReStock(Guid productId, int quantity)
+        public async Task<bool> ReStockAsync(Guid productId, int quantity)
         {
-            var product = await _productRepository.GetById(productId).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(false);
 
             if (product == null) return false;
 

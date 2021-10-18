@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RichDomainStore.Catalog.Domain;
+using RichDomainStore.Catalog.Domain.Entities;
 
 namespace RichDomainStore.Catalog.Data.Mappings
 {
@@ -18,7 +18,7 @@ namespace RichDomainStore.Catalog.Data.Mappings
             // 1 : N => Categories : Products
             builder.HasMany(c => c.Products)
                 .WithOne(p => p.Category)
-                .HasForeignKey(p => p.CategoryId);
+                .HasForeignKey(p => p.CategoryId);  
 
             builder.ToTable("Categories");
         }

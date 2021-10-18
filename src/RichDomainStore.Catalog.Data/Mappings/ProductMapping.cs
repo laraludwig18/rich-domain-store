@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RichDomainStore.Catalog.Domain;
+using RichDomainStore.Catalog.Domain.Entities;
 
 namespace RichDomainStore.Catalog.Data.Mappings
 {

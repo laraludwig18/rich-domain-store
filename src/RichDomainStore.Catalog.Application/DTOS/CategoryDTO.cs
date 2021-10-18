@@ -1,6 +1,6 @@
 using System;
 
-namespace RichDomainStore.Catalog.Application.Dtos
+namespace RichDomainStore.Catalog.Application.DTOS
 {
     public class CategoryDTO
     {

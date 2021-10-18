@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using RichDomainStore.Core.DomainObjects;
 
-namespace RichDomainStore.Catalog.Domain
+namespace RichDomainStore.Catalog.Domain.Entities
 {
     public class Category : Entity
     {

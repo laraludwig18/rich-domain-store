@@ -1,7 +1,7 @@
 using System;
 using RichDomainStore.Core.DomainObjects;
 
-namespace RichDomainStore.Catalog.Domain
+namespace RichDomainStore.Catalog.Domain.Entities
 {
     public class Product : Entity, IAggregateRoot
     {
@@ -16,13 +16,14 @@ namespace RichDomainStore.Catalog.Domain
         public Dimensions Dimensions { get; private set; }
         public Category Category { get; private set; }
 
+        protected Product() { }
+        
         public Product(
             string name,
             string description,
             bool active,
             decimal value,
             Guid categoryId,
-            DateTime registerDate,
             string image,
             Dimensions dimensions)
         {
@@ -31,7 +32,7 @@ namespace RichDomainStore.Catalog.Domain
             Description = description;
             Active = active;
             Value = value;
-            RegisterDate = registerDate;
+            RegisterDate = DateTime.Now;
             Image = image;
             Dimensions = dimensions;
 

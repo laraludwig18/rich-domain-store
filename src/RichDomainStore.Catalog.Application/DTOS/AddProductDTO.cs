@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 
-namespace RichDomainStore.Catalog.Application.Dtos
+namespace RichDomainStore.Catalog.Application.DTOS
 {
-    public class ProductDTO
+    public class AddProductDTO
     {
-        public Guid Id { get; set; }
-
         public Guid CategoryId { get; set; }
 
         public string Name { get; set; }
@@ -17,8 +14,6 @@ namespace RichDomainStore.Catalog.Application.Dtos
 
         public decimal Value { get; set; }
 
-        public DateTime RegisterDate { get; set; }
-
         public string Image { get; set; }
 
         public int StockQuantity { get; set; }
@@ -28,7 +23,5 @@ namespace RichDomainStore.Catalog.Application.Dtos
         public int Width { get; set; }
 
         public int Depth { get; set; }
-
-        public IEnumerable<CategoryDTO> Categories { get; set; }
     }
 }

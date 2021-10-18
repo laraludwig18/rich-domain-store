@@ -1,4 +1,5 @@
 using System;
+using RichDomainStore.Catalog.Domain.Entities;
 using RichDomainStore.Core.DomainObjects;
 using Xunit;
 

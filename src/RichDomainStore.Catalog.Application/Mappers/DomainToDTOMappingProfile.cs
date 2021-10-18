@@ -1,6 +1,6 @@
 using AutoMapper;
-using RichDomainStore.Catalog.Application.Dtos;
-using RichDomainStore.Catalog.Domain;
+using RichDomainStore.Catalog.Application.DTOS;
+using RichDomainStore.Catalog.Domain.Entities;
 
 namespace RichDomainStore.Catalog.Application.Mappers
 {

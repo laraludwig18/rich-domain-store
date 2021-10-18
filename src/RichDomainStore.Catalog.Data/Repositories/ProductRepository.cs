@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RichDomainStore.Catalog.Domain;
+using RichDomainStore.Catalog.Domain.Entities;
+using RichDomainStore.Catalog.Domain.Interfaces;
 using RichDomainStore.Core.Data;
 
 namespace RichDomainStore.Catalog.Data.Repositories
@@ -19,24 +20,24 @@ namespace RichDomainStore.Catalog.Data.Repositories
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _context.Products.AsNoTracking().ToListAsync().ConfigureAwait(false);
+            return await _context.Products.AsNoTracking().Include(p => p.Category).ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Product>> GetByCategoryCode(int code)
+        public async Task<IEnumerable<Product>> GetByCategoryCodeAsync(int code)
         {
             return await _context.Products.AsNoTracking().Include(p => p.Category).Where(c => c.Category.Code == code)
                 .ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task<Product> GetById(Guid id)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
-            return await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id)
+            return await _context.Products.AsNoTracking().Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id)
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {
             return await _context.Categories.AsNoTracking().ToListAsync().ConfigureAwait(false);
         }
