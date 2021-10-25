@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace RichDomainStore.Catalog.Application.DTOS
 {
@@ -17,7 +16,7 @@ namespace RichDomainStore.Catalog.Application.DTOS
 
         public decimal Value { get; set; }
 
-        public DateTime RegisterDate { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public string Image { get; set; }
 

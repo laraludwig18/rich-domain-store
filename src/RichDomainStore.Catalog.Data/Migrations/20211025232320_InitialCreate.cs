@@ -30,7 +30,7 @@ namespace RichDomainStore.Catalog.Data.Migrations
                     Description = table.Column<string>(type: "varchar(500)", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Image = table.Column<string>(type: "varchar(250)", nullable: false),
                     StockQuantity = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: true),

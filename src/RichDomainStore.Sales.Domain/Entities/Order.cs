@@ -12,7 +12,7 @@ namespace RichDomainStore.Sales.Domain.Entities
         public bool HasVoucherBeenUsed { get; private set; }
         public decimal Discount { get; private set; }
         public decimal TotalValue { get; private set; }
-        public DateTime RegisterDate { get; private set; }
+        public DateTime CreatedAt { get; private set; }
         public OrderStatus OrderStatus { get; private set; }
 
         public Order(Guid customerId, bool hasVoucherBeenUsed, decimal discount, decimal totalValue)

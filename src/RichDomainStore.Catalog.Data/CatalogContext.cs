@@ -30,16 +30,16 @@ namespace RichDomainStore.Catalog.Data
         public async Task<bool> Commit()
         {
             foreach (var entry in ChangeTracker.Entries()
-                .Where(entry => entry.Entity.GetType().GetProperty("RegisterDate") != null))
+                .Where(entry => entry.Entity.GetType().GetProperty("CreatedAt") != null))
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Property("RegisterDate").CurrentValue = DateTime.Now;
+                    entry.Property("CreatedAt").CurrentValue = DateTime.Now;
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
-                    entry.Property("RegisterDate").IsModified = false;
+                    entry.Property("CreatedAt").IsModified = false;
                 }
             }
 

@@ -19,7 +19,7 @@ namespace RichDomainStore.Catalog.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Category", b =>
+            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,7 @@ namespace RichDomainStore.Catalog.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Product", b =>
+            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,6 +48,9 @@ namespace RichDomainStore.Catalog.Data.Migrations
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -60,9 +63,6 @@ namespace RichDomainStore.Catalog.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(250)");
-
-                    b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
@@ -77,9 +77,9 @@ namespace RichDomainStore.Catalog.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Product", b =>
+            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("RichDomainStore.Catalog.Domain.Category", "Category")
+                    b.HasOne("RichDomainStore.Catalog.Domain.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -115,7 +115,7 @@ namespace RichDomainStore.Catalog.Data.Migrations
                     b.Navigation("Dimensions");
                 });
 
-            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Category", b =>
+            modelBuilder.Entity("RichDomainStore.Catalog.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
