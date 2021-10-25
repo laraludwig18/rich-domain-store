@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RichDomainStore.Core.DomainObjects;
 using RichDomainStore.Sales.Domain.Enums;
 
@@ -15,12 +16,24 @@ namespace RichDomainStore.Sales.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public OrderStatus OrderStatus { get; private set; }
 
+        private readonly List<OrderItem> _orderItems;
+        public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
+
+        // EF Rel.
+        public Voucher Voucher { get; private set; }
+
         public Order(Guid customerId, bool hasVoucherBeenUsed, decimal discount, decimal totalValue)
         {
             CustomerId = customerId;
             HasVoucherBeenUsed = hasVoucherBeenUsed;
             Discount = discount;
             TotalValue = totalValue;
+            _orderItems = new List<OrderItem>();
+        }
+
+        protected Order()
+        {
+            _orderItems = new List<OrderItem>();
         }
     }
 }
