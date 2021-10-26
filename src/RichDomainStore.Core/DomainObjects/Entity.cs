@@ -46,5 +46,10 @@ namespace RichDomainStore.Core.DomainObjects
         {
             return $"{GetType().Name} [Id={Id}]";
         }
+
+        public virtual bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

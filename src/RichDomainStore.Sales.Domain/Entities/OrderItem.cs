@@ -43,5 +43,10 @@ namespace RichDomainStore.Sales.Domain.Entities
         {
             Quantity = quantity;
         }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
     }
 }
