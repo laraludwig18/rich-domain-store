@@ -4,11 +4,11 @@ using RichDomainStore.Core.Messages;
 
 namespace RichDomainStore.Core.Bus
 {
-    public class MediatrHandler : IMediatrHandler
+    public class MediatorHandler : IMediatorHandler
     {
         private readonly IMediator _mediator;
 
-        public MediatrHandler(IMediator mediator)
+        public MediatorHandler(IMediator mediator)
         {
             _mediator = mediator;
         }

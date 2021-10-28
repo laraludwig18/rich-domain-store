@@ -19,8 +19,7 @@ namespace RichDomainStore.Catalog.API.Configurations
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Rich domain store",
-                    Description = "Rich Domain Store Swagger API",
+                    Title = "Rich domain store - Catalog context",
                 });
             });
         }

@@ -9,9 +9,9 @@ namespace RichDomainStore.Catalog.Domain.Services
     public class StockService : IStockService
     {
         private readonly IProductRepository _productRepository;
-        private readonly IMediatrHandler _bus;
+        private readonly IMediatorHandler _bus;
 
-        public StockService(IProductRepository productRepository, IMediatrHandler bus)
+        public StockService(IProductRepository productRepository, IMediatorHandler bus)
         {
             _productRepository = productRepository;
             _bus = bus;

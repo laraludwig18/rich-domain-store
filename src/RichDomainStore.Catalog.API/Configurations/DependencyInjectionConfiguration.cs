@@ -10,14 +10,13 @@ using RichDomainStore.Core.Bus;
 
 namespace RichDomainStore.Catalog.API.Configurations
 {
-    public static class DependencyInjectionConfig
+    public static class DependencyInjectionConfiguration
     {
         public static void AddDependencyInjectionConfiguration(this IServiceCollection services)
         {
             // Domain Bus (Mediator)
-            services.AddScoped<IMediatrHandler, MediatrHandler>();
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
             
-            // Catalog
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductAppService, ProductAppService>();
             services.AddScoped<IStockService, StockService>();
