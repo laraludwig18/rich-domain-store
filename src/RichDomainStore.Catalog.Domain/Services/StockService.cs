@@ -29,11 +29,11 @@ namespace RichDomainStore.Catalog.Domain.Services
 
             if (product.StockQuantity < 10)
             {
-                await _bus.PublishEvent(new LowProductInStockEvent(product.Id, product.StockQuantity));
+                await _bus.PublishEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity));
             }
 
             _productRepository.Update(product);
-            return await _productRepository.UnitOfWork.Commit().ConfigureAwait(false);
+            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }
 
         public async Task<bool> ReStockAsync(Guid productId, int quantity)
@@ -45,7 +45,7 @@ namespace RichDomainStore.Catalog.Domain.Services
             product.ReStock(quantity);
 
             _productRepository.Update(product);
-            return await _productRepository.UnitOfWork.Commit().ConfigureAwait(false);
+            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }
 
         public void Dispose()

@@ -7,8 +7,13 @@ using RichDomainStore.Catalog.Domain.Events;
 using RichDomainStore.Catalog.Domain.Interfaces;
 using RichDomainStore.Catalog.Domain.Services;
 using RichDomainStore.Core.Bus;
+using RichDomainStore.Sales.Application.Commands;
+using RichDomainStore.Sales.Application.Handlers;
+using RichDomainStore.Sales.Data;
+using RichDomainStore.Sales.Data.Repositories;
+using RichDomainStore.Sales.Domain.Interfaces;
 
-namespace RichDomainStore.Catalog.API.Configurations
+namespace RichDomainStore.API.Configurations
 {
     public static class DependencyInjectionConfiguration
     {
@@ -17,11 +22,18 @@ namespace RichDomainStore.Catalog.API.Configurations
             // Domain Bus (Mediator)
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             
+            // Catalog
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductAppService, ProductAppService>();
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<CatalogContext>();
-            
+
+            // Sales
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<SalesContext>();
+
+            services.AddScoped<IRequestHandler<AddOrderItemCommand, bool>, AddOrderItemCommandHandler>();
+
             services.AddScoped<INotificationHandler<LowProductInStockEvent>, ProductEventHandler>();
         }
     }

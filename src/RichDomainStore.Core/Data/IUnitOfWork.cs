@@ -4,6 +4,6 @@ namespace RichDomainStore.Core.Data
 {
     public interface IUnitOfWork
     {
-        Task<bool> Commit();
+        Task<bool> CommitAsync();
     }
 }

@@ -1,15 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using RichDomainStore.Core.Data;
 using RichDomainStore.Sales.Domain.Entities;
 
 namespace RichDomainStore.Sales.Domain.Interfaces
 {
-    public class IOrderRepository : IRepository<Order>
+    public interface IOrderRepository : IRepository<Order>
     {
-        public IUnitOfWork UnitOfWork => throw new System.NotImplementedException();
+        Task<Order> GetByIdAsync(Guid id);
+        Task<IEnumerable<Order>> GetOrdersByCustomerIdAsync(Guid customerId);
+        Task<Order> GetDraftOrderByCustomerIdAsync(Guid customerId);
+        void AddAsync(Order order);
+        void UpdateAsync(Order order);
 
-        public void Dispose()
-        {
-            throw new System.NotImplementedException();
-        }
+        Task<OrderItem> GetItemByIdAsync(Guid id);
+        Task<OrderItem> GetItemByOrderIdAsync(Guid orderId, Guid productId);
+        void AddItemAsync(OrderItem orderItem);
+        void UpdateItemAsync(OrderItem orderItem);
+        void RemoveItemAsync(OrderItem orderItem);
+
+        Task<Voucher> GetVoucherByCodeAsync(string code);
     }
 }

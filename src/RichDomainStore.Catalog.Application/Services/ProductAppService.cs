@@ -61,7 +61,7 @@ namespace RichDomainStore.Catalog.Application.Services
             var product = _mapper.Map<Product>(createProductDTO);
             _productRepository.Add(product);
 
-            await _productRepository.UnitOfWork.Commit().ConfigureAwait(false);
+            await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
             return _mapper.Map<ProductDTO>(product);
         }
 
@@ -70,7 +70,7 @@ namespace RichDomainStore.Catalog.Application.Services
             var product = _mapper.Map<Product>(updateProductDTO);
             _productRepository.Update(product);
 
-            await _productRepository.UnitOfWork.Commit().ConfigureAwait(false);
+            await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
             return _mapper.Map<ProductDTO>(product);
         }
 

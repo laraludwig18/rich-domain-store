@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace RichDomainStore.Catalog.API.Configurations
+namespace RichDomainStore.API.Configurations
 {
     public static class SwaggerConfiguration
     {

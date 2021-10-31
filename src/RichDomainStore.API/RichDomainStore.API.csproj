@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RichDomainStore.Catalog.Application\RichDomainStore.Catalog.Application.csproj" />
+    <ProjectReference Include="..\RichDomainStore.Sales.Application\RichDomainStore.Sales.Application.csproj" />
+    <ProjectReference Include="..\RichDomainStore.Sales.Data\RichDomainStore.Sales.Data.csproj" />
   </ItemGroup>
 
 </Project>

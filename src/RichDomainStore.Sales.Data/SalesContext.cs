@@ -2,22 +2,23 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RichDomainStore.Catalog.Domain.Entities;
 using RichDomainStore.Core.Data;
 using RichDomainStore.Core.Messages;
+using RichDomainStore.Sales.Domain.Entities;
 
-namespace RichDomainStore.Catalog.Data
+namespace RichDomainStore.Sales.Data
 {
-    public class CatalogContext : DbContext, IUnitOfWork
+    public class SalesContext : DbContext, IUnitOfWork
     {
-        public CatalogContext(DbContextOptions<CatalogContext> options) : base(options)
+        public SalesContext(DbContextOptions<SalesContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,7 +28,13 @@ namespace RichDomainStore.Catalog.Data
 
             modelBuilder.Ignore<Event>();
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SalesContext).Assembly);
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+                relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+
+            modelBuilder.HasSequence<int>("MySequence").StartsAt(1000).IncrementsBy(1);
+            base.OnModelCreating(modelBuilder);
         }
 
         public async Task<bool> CommitAsync()

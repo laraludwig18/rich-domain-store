@@ -3,7 +3,7 @@ using System.Reflection;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RichDomainStore.Catalog.API.Configurations
+namespace RichDomainStore.API.Configurations
 {
     public static class MvcConfiguration
     {

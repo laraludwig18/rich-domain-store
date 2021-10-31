@@ -13,7 +13,12 @@ namespace RichDomainStore.Core.Bus
             _mediator = mediator;
         }
 
-        public async Task PublishEvent<T>(T e) where T : Event
+        public async Task<bool> SendCommandAsync<T>(T command) where T : Command
+        {
+            return await _mediator.Send(command);
+        }
+
+        public async Task PublishEventAsync<T>(T e) where T : Event
         {
             await _mediator.Publish(e).ConfigureAwait(false);
         }

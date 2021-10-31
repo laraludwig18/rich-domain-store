@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RichDomainStore.Catalog.API.Configurations
+namespace RichDomainStore.API.Configurations
 {
     public static class AutoMapperConfiguration
     {

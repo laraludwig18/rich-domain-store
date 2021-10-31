@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RichDomainStore.Catalog.API.Configurations;
+using RichDomainStore.API.Configurations;
 
-namespace RichDomainStore.Catalog.API
+namespace RichDomainStore.API
 {
     public class Startup
     {

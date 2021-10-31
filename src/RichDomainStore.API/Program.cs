@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace RichDomainStore.Catalog.API
+namespace RichDomainStore.API
 {
     public class Program
     {

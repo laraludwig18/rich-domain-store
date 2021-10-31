@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using RichDomainStore.Catalog.Application.DTOS;
 using RichDomainStore.Catalog.Application.Services;
 
-namespace RichDomainStore.Catalog.API.Controllers
+namespace RichDomainStore.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

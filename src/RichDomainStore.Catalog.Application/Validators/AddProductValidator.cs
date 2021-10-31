@@ -1,7 +1,7 @@
 using FluentValidation;
 using RichDomainStore.Catalog.Application.DTOS;
 
-namespace RichDomainStore.Catalog.API.FluentValidation
+namespace RichDomainStore.API.FluentValidation
 {
     public class AddProductValidator : AbstractValidator<AddProductDTO>
     {
