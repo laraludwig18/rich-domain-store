@@ -4,21 +4,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using RichDomainStore.Core.Communication.Mediator;
-using RichDomainStore.Core.Messages;
 using RichDomainStore.Sales.Application.Commands;
 using RichDomainStore.Sales.Domain.Entities;
 using RichDomainStore.Sales.Domain.Interfaces;
 
 namespace RichDomainStore.Sales.Application.Handlers
 {
-    public class AddOrderItemCommandHandler : IRequestHandler<AddOrderItemCommand, bool>
+    public class AddOrderItemCommandHandler : CommandHandler, IRequestHandler<AddOrderItemCommand, bool>
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMediatorHandler _mediatorHandler;
 
         public AddOrderItemCommandHandler(
             IOrderRepository orderRepository,
-            IMediatorHandler mediatorHandler)
+            IMediatorHandler mediatorHandler) : base(mediatorHandler)
         {
             _orderRepository = orderRepository;
             _mediatorHandler = mediatorHandler;
@@ -66,21 +65,6 @@ namespace RichDomainStore.Sales.Application.Handlers
             }
 
             return order;
-        }
-
-        private bool ValidateCommand(Command message)
-        {
-            if (message.IsValid())
-            {
-                return true;
-            }
-
-            foreach (var error in message.ValidationResult.Errors)
-            {
-                // _mediatorHandler.PublishEventAsync(new DomainNotification(message.MessageType, error.ErrorMessage));
-            }
-
-            return false;
         }
     }
 }
