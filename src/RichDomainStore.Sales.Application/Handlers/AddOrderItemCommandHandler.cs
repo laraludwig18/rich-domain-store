@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Sales.Application.Commands;
+using RichDomainStore.Sales.Application.Events;
 using RichDomainStore.Sales.Domain.Entities;
 using RichDomainStore.Sales.Domain.Interfaces;
 
@@ -30,14 +31,22 @@ namespace RichDomainStore.Sales.Application.Handlers
                 return false;
             }
 
-            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId);
+            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId).ConfigureAwait(false);
             var orderItem = new OrderItem(message.ProductId, message.ProductName, message.Quantity, message.Value);
 
             order = order == null
                 ? CreateNewDraftOrder(message.CustomerId, orderItem)
                 : AddItemToExistentOrder(order, orderItem);
 
-            return await _orderRepository.UnitOfWork.CommitAsync();
+            order.AddEvent(
+                new OrderItemAddedEvent(message.CustomerId,
+                    order.Id,
+                    message.ProductId,
+                    message.ProductName,
+                    message.Value,
+                    message.Quantity));
+
+            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }
 
         private Order CreateNewDraftOrder(Guid customerId, OrderItem orderItem)
@@ -46,6 +55,7 @@ namespace RichDomainStore.Sales.Application.Handlers
             order.AddItem(orderItem);
 
             _orderRepository.AddAsync(order);
+            order.AddEvent(new DraftOrderStartedEvent(customerId, order.Id));
 
             return order;
         }
@@ -63,6 +73,8 @@ namespace RichDomainStore.Sales.Application.Handlers
             {
                 _orderRepository.AddItemAsync(orderItem);
             }
+
+            order.AddEvent(new OrderUpdatedEvent(order.CustomerId, order.Id, order.TotalValue));
 
             return order;
         }
