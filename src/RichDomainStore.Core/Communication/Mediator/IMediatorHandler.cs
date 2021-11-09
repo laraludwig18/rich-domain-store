@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using RichDomainStore.Core.Messages;
 
-namespace RichDomainStore.Core.Bus
+namespace RichDomainStore.Core.Communication.Mediator
 {
     public interface IMediatorHandler
     {

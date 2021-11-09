@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RichDomainStore.API.Models;
 using RichDomainStore.Catalog.Application.Services;
-using RichDomainStore.Core.Bus;
+using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Sales.Application.Commands;
 
 namespace RichDomainStore.API.Controllers

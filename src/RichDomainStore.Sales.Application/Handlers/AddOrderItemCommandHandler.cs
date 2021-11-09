@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using RichDomainStore.Core.Bus;
+using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Core.Messages;
 using RichDomainStore.Sales.Application.Commands;
 using RichDomainStore.Sales.Domain.Entities;

@@ -2,19 +2,19 @@ using System;
 using System.Threading.Tasks;
 using RichDomainStore.Catalog.Domain.Events;
 using RichDomainStore.Catalog.Domain.Interfaces;
-using RichDomainStore.Core.Bus;
+using RichDomainStore.Core.Communication.Mediator;
 
 namespace RichDomainStore.Catalog.Domain.Services
 {
     public class StockService : IStockService
     {
         private readonly IProductRepository _productRepository;
-        private readonly IMediatorHandler _bus;
+        private readonly IMediatorHandler _mediator;
 
-        public StockService(IProductRepository productRepository, IMediatorHandler bus)
+        public StockService(IProductRepository productRepository, IMediatorHandler mediator)
         {
             _productRepository = productRepository;
-            _bus = bus;
+            _mediator = mediator;
         }
 
         public async Task<bool> DebitStockAsync(Guid productId, int quantity)
@@ -29,7 +29,7 @@ namespace RichDomainStore.Catalog.Domain.Services
 
             if (product.StockQuantity < 10)
             {
-                await _bus.PublishEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity));
+                await _mediator.PublishEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity));
             }
 
             _productRepository.Update(product);

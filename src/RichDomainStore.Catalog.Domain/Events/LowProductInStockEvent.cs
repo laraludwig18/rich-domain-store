@@ -1,5 +1,5 @@
 using System;
-using RichDomainStore.Core.DomainObjects;
+using RichDomainStore.Core.Messages.CommonMessages.DomainEvents;
 
 namespace RichDomainStore.Catalog.Domain.Events
 {
