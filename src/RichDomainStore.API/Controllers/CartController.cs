@@ -1,11 +1,12 @@
-using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RichDomainStore.API.Models;
 using RichDomainStore.Catalog.Application.Services;
 using RichDomainStore.Core.Communication.Mediator;
+using RichDomainStore.Core.Messages.CommonMessages.Notifications;
 using RichDomainStore.Sales.Application.Commands;
 
 namespace RichDomainStore.API.Controllers
@@ -16,7 +17,9 @@ namespace RichDomainStore.API.Controllers
     {
         private readonly IProductAppService _productAppService;
         private readonly IMediatorHandler _mediatorHandler;
-        public CartController(IProductAppService productAppService, IMediatorHandler mediatorHandler)
+        public CartController(INotificationHandler<DomainNotification> notifications,
+                                IProductAppService productAppService,
+                                IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
         {
             _productAppService = productAppService;
             _mediatorHandler = mediatorHandler;
@@ -37,7 +40,13 @@ namespace RichDomainStore.API.Controllers
             var command = new AddOrderItemCommand(CustomerId, product.Id, product.Name, request.Quantity, product.Value);
             await _mediatorHandler.SendCommandAsync(command);
 
-            return Ok();
+            if (IsValidOperation())
+            {
+                return Ok();
+            }
+
+            var errors = GetErrorMessages();
+            return BadRequest(errors);
         }
     }
 }

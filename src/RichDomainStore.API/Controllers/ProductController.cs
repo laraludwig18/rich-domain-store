@@ -11,7 +11,7 @@ namespace RichDomainStore.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController : Controller
     {
         private readonly IProductAppService _productAppService;
 
