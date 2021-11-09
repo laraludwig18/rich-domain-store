@@ -2,18 +2,20 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Core.Data;
 using RichDomainStore.Core.Messages;
+using RichDomainStore.Sales.Data.Extensions;
 using RichDomainStore.Sales.Domain.Entities;
 
 namespace RichDomainStore.Sales.Data
 {
     public class SalesContext : DbContext, IUnitOfWork
     {
-        public SalesContext(DbContextOptions<SalesContext> options) : base(options)
+        private readonly IMediatorHandler _mediatorHandler;
+        public SalesContext(DbContextOptions<SalesContext> options, IMediatorHandler mediatorHandler) : base(options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            ChangeTracker.AutoDetectChangesEnabled = false;
+            _mediatorHandler = mediatorHandler;
         }
 
         public DbSet<Order> Orders { get; set; }
@@ -53,7 +55,14 @@ namespace RichDomainStore.Sales.Data
                 }
             }
 
-            return await base.SaveChangesAsync() > 0;
+            var success = await base.SaveChangesAsync().ConfigureAwait(false) > 0;
+
+            if (success) 
+            {
+                await _mediatorHandler.PublishEventsAsync(this).ConfigureAwait(false);
+            }
+
+            return success;
         }
     }
 }
