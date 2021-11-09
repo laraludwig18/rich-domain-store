@@ -29,7 +29,7 @@ namespace RichDomainStore.Catalog.Domain.Services
 
             if (product.StockQuantity < 10)
             {
-                await _mediator.PublishEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity));
+                await _mediator.PublishEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity)).ConfigureAwait(false);
             }
 
             _productRepository.Update(product);

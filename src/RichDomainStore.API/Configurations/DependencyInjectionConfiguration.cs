@@ -32,7 +32,7 @@ namespace RichDomainStore.API.Configurations
             services.AddScoped<IStockService, StockService>();
             services.AddScoped<CatalogContext>();
 
-            services.AddScoped<INotificationHandler<LowProductInStockEvent>, ProductEventHandler>();
+            services.AddScoped<INotificationHandler<LowProductInStockEvent>, LowProductInStockEventHandler>();
             
             // Sales
             services.AddScoped<IOrderRepository, OrderRepository>();

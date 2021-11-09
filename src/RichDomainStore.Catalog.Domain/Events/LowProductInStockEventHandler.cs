@@ -5,11 +5,11 @@ using RichDomainStore.Catalog.Domain.Interfaces;
 
 namespace RichDomainStore.Catalog.Domain.Events
 {
-    public class ProductEventHandler : INotificationHandler<LowProductInStockEvent>
+    public class LowProductInStockEventHandler : INotificationHandler<LowProductInStockEvent>
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductEventHandler(IProductRepository productRepository)
+        public LowProductInStockEventHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
