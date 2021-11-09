@@ -11,10 +11,7 @@ namespace RichDomainStore.Catalog.Data
     public class CatalogContext : DbContext, IUnitOfWork
     {
         public CatalogContext(DbContextOptions<CatalogContext> options) : base(options)
-        {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            ChangeTracker.AutoDetectChangesEnabled = false;
-        }
+        {}
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
