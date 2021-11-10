@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using RichDomainStore.Catalog.Application.DTOS;
+using RichDomainStore.Catalog.Application.Dtos;
 using RichDomainStore.Catalog.Domain.Entities;
 using RichDomainStore.Catalog.Domain.Interfaces;
 using RichDomainStore.Core.DomainObjects;
@@ -26,19 +26,19 @@ namespace RichDomainStore.Catalog.Application.Services
             _stockService = stockService;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAllAsync()
+        public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
             var products = await _productRepository.GetAllAsync().ConfigureAwait(false);
-            return _mapper.Map<IEnumerable<ProductDTO>>(products);
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetByCategoryCodeAsync(int code)
+        public async Task<IEnumerable<ProductDto>> GetByCategoryCodeAsync(int code)
         {
             var products = await _productRepository.GetByCategoryCodeAsync(code).ConfigureAwait(false);
-            return _mapper.Map<IEnumerable<ProductDTO>>(products);
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
-        public async Task<ProductDTO> GetByIdAsync(Guid id)
+        public async Task<ProductDto> GetByIdAsync(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
 
@@ -47,34 +47,34 @@ namespace RichDomainStore.Catalog.Application.Services
                 throw new NotFoundException("Product not found");
             }
 
-            return _mapper.Map<ProductDTO>(product);
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<IEnumerable<CategoryDTO>> GetCategoriesAsync()
+        public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
         {
             var categories = await _productRepository.GetCategoriesAsync().ConfigureAwait(false);
-            return _mapper.Map<IEnumerable<CategoryDTO>>(categories);
+            return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
 
-        public async Task<ProductDTO> AddProductAsync(AddProductDTO createProductDTO)
+        public async Task<ProductDto> AddProductAsync(AddProductDto createProductDTO)
         {
             var product = _mapper.Map<Product>(createProductDTO);
             _productRepository.Add(product);
 
             await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
-            return _mapper.Map<ProductDTO>(product);
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<ProductDTO> UpdateProductAsync(UpdateProductDTO updateProductDTO)
+        public async Task<ProductDto> UpdateProductAsync(UpdateProductDto updateProductDTO)
         {
             var product = _mapper.Map<Product>(updateProductDTO);
             _productRepository.Update(product);
 
             await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
-            return _mapper.Map<ProductDTO>(product);
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<ProductDTO> DebitStockAsync(Guid id, UpdateStockDTO updateStockDTO)
+        public async Task<ProductDto> DebitStockAsync(Guid id, UpdateStockDto updateStockDTO)
         {
             if (!_stockService.DebitStockAsync(id, updateStockDTO.Quantity).Result)
             {
@@ -82,10 +82,10 @@ namespace RichDomainStore.Catalog.Application.Services
             }
 
             var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
-            return _mapper.Map<ProductDTO>(product);
+            return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<ProductDTO> ReStockAsync(Guid id, UpdateStockDTO updateStockDTO)
+        public async Task<ProductDto> ReStockAsync(Guid id, UpdateStockDto updateStockDTO)
         {
             if (!_stockService.ReStockAsync(id, updateStockDTO.Quantity).Result)
             {
@@ -93,7 +93,7 @@ namespace RichDomainStore.Catalog.Application.Services
             }
 
             var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
-            return _mapper.Map<ProductDTO>(product);
+            return _mapper.Map<ProductDto>(product);
         }
 
         public void Dispose()

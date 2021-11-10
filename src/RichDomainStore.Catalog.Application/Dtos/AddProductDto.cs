@@ -1,11 +1,9 @@
 using System;
 
-namespace RichDomainStore.Catalog.Application.DTOS
+namespace RichDomainStore.Catalog.Application.Dtos
 {
-    public class ProductDTO
+    public class AddProductDto
     {
-        public Guid Id { get; set; }
-
         public Guid CategoryId { get; set; }
 
         public string Name { get; set; }
@@ -16,8 +14,6 @@ namespace RichDomainStore.Catalog.Application.DTOS
 
         public decimal Value { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
         public string Image { get; set; }
 
         public int StockQuantity { get; set; }
@@ -27,7 +23,5 @@ namespace RichDomainStore.Catalog.Application.DTOS
         public int Width { get; set; }
 
         public int Depth { get; set; }
-
-        public CategoryDTO Category { get; set; }
     }
 }

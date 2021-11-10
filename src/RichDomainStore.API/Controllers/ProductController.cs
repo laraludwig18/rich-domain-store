@@ -4,7 +4,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RichDomainStore.Catalog.Application.DTOS;
+using RichDomainStore.Catalog.Application.Dtos;
 using RichDomainStore.Catalog.Application.Services;
 
 namespace RichDomainStore.API.Controllers
@@ -21,7 +21,7 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProductDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProductDto>), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -31,7 +31,7 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetProductByIdAsync")]
-        [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetProductByIdAsync(Guid id)
         {
@@ -41,7 +41,7 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpGet("CategoryCode/{categoryCode}")]
-        [ProducesResponseType(typeof(IEnumerable<ProductDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProductDto>), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetByCategoryCodeAsync(int categoryCode)
         {
@@ -51,7 +51,7 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpGet("Categories")]
-        [ProducesResponseType(typeof(IEnumerable<CategoryDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<CategoryDto>), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetCategoriesAsync()
         {
@@ -61,9 +61,9 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status201Created)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> AddProductAsync(AddProductDTO createProductDTO)
+        public async Task<IActionResult> AddProductAsync(AddProductDto createProductDTO)
         {
             var result = await _productAppService.AddProductAsync(createProductDTO);
 
@@ -71,9 +71,9 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> UpdateProductAsync(UpdateProductDTO updateProductDTO)
+        public async Task<IActionResult> UpdateProductAsync(UpdateProductDto updateProductDTO)
         {
             var result = await _productAppService.UpdateProductAsync(updateProductDTO);
 
@@ -81,9 +81,9 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpPut("{id}/DebitStock")]
-        [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> DebitStockAsync(Guid id, [FromBody] UpdateStockDTO updateStockDTO)
+        public async Task<IActionResult> DebitStockAsync(Guid id, [FromBody] UpdateStockDto updateStockDTO)
         {
             var result = await _productAppService.DebitStockAsync(id, updateStockDTO);
 
@@ -91,9 +91,9 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpPut("{id}/ReStock")]
-        [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> ReStockAsync(Guid id, [FromBody] UpdateStockDTO updateStockDTO)
+        public async Task<IActionResult> ReStockAsync(Guid id, [FromBody] UpdateStockDto updateStockDTO)
         {
             var result = await _productAppService.ReStockAsync(id, updateStockDTO);
 

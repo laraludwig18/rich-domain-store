@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RichDomainStore.Catalog.Application.DTOS;
+using RichDomainStore.Catalog.Application.Dtos;
 
 namespace RichDomainStore.Catalog.Application.Services
 {
     public interface IProductAppService : IDisposable
     {
-        Task<IEnumerable<ProductDTO>> GetByCategoryCodeAsync(int code);
-        Task<ProductDTO> GetByIdAsync(Guid id);
-        Task<IEnumerable<ProductDTO>> GetAllAsync();
-        Task<IEnumerable<CategoryDTO>> GetCategoriesAsync();
+        Task<IEnumerable<ProductDto>> GetByCategoryCodeAsync(int code);
+        Task<ProductDto> GetByIdAsync(Guid id);
+        Task<IEnumerable<ProductDto>> GetAllAsync();
+        Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
 
-        Task<ProductDTO> AddProductAsync(AddProductDTO product);
-        Task<ProductDTO> UpdateProductAsync(UpdateProductDTO product);
+        Task<ProductDto> AddProductAsync(AddProductDto product);
+        Task<ProductDto> UpdateProductAsync(UpdateProductDto product);
 
-        Task<ProductDTO> DebitStockAsync(Guid id, UpdateStockDTO updateStockDTO);
-        Task<ProductDTO> ReStockAsync(Guid id, UpdateStockDTO updateStockDTO);
+        Task<ProductDto> DebitStockAsync(Guid id, UpdateStockDto updateStockDTO);
+        Task<ProductDto> ReStockAsync(Guid id, UpdateStockDto updateStockDTO);
     }
 }

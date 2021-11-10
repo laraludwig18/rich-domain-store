@@ -1,8 +1,8 @@
 using System;
 
-namespace RichDomainStore.Catalog.Application.DTOS
+namespace RichDomainStore.Catalog.Application.Dtos
 {
-    public class UpdateProductDTO
+    public class UpdateProductDto
     {
         public Guid CategoryId { get; set; }
 

@@ -1,15 +1,15 @@
 using AutoMapper;
-using RichDomainStore.Catalog.Application.DTOS;
+using RichDomainStore.Catalog.Application.Dtos;
 using RichDomainStore.Catalog.Domain;
 using RichDomainStore.Catalog.Domain.Entities;
 
 namespace RichDomainStore.Catalog.Application.Mappers
 {
-    public class DTOToDomainMappingProfile : Profile
+    public class DtoToDomainMappingProfile : Profile
     {
-        public DTOToDomainMappingProfile()
+        public DtoToDomainMappingProfile()
         {
-            CreateMap<AddProductDTO, Product>()
+            CreateMap<AddProductDto, Product>()
                 .ConstructUsing(p =>
                     new Product(p.Name,
                         p.Description,
@@ -22,7 +22,7 @@ namespace RichDomainStore.Catalog.Application.Mappers
                             p.Width,
                             p.Depth)));
 
-            CreateMap<UpdateProductDTO, Product>()
+            CreateMap<UpdateProductDto, Product>()
                 .ConstructUsing(p =>
                     new Product(p.Name,
                         p.Description,
