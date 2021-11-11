@@ -8,6 +8,8 @@ using RichDomainStore.Catalog.Application.Services;
 using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Core.Messages.CommonMessages.Notifications;
 using RichDomainStore.Sales.Application.Commands;
+using RichDomainStore.Sales.Application.Queries;
+using RichDomainStore.Sales.Application.Queries.Dtos;
 
 namespace RichDomainStore.API.Controllers
 {
@@ -16,13 +18,27 @@ namespace RichDomainStore.API.Controllers
     public class CartController : ControllerBase
     {
         private readonly IProductAppService _productAppService;
+        private readonly IGetCustomerCartQuery _getCustomerCartQuery;
         private readonly IMediatorHandler _mediatorHandler;
+
         public CartController(INotificationHandler<DomainNotification> notifications,
+                                IGetCustomerCartQuery getCustomerCartQuery,
                                 IProductAppService productAppService,
                                 IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
         {
             _productAppService = productAppService;
+            _getCustomerCartQuery = getCustomerCartQuery;
             _mediatorHandler = mediatorHandler;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(CartDto), StatusCodes.Status200OK)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> GetCustomerCartAsync()
+        {
+            var cart = await _getCustomerCartQuery.HandleAsync(CustomerId);
+
+            return Ok(cart);
         }
 
         [HttpPost]

@@ -10,6 +10,7 @@ using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Core.Messages.CommonMessages.Notifications;
 using RichDomainStore.Sales.Application.Commands;
 using RichDomainStore.Sales.Application.Handlers;
+using RichDomainStore.Sales.Application.Queries;
 using RichDomainStore.Sales.Data;
 using RichDomainStore.Sales.Data.Repositories;
 using RichDomainStore.Sales.Domain.Interfaces;
@@ -25,7 +26,7 @@ namespace RichDomainStore.API.Configurations
 
             // Notifications
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-            
+
             // Catalog
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductAppService, ProductAppService>();
@@ -33,9 +34,11 @@ namespace RichDomainStore.API.Configurations
             services.AddScoped<CatalogContext>();
 
             services.AddScoped<INotificationHandler<LowProductInStockEvent>, LowProductInStockEventHandler>();
-            
+
             // Sales
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IGetCustomerOrdersQuery, GetCustomerOrdersQuery>();
+            services.AddScoped<IGetCustomerCartQuery, GetCustomerCartQuery>();
             services.AddScoped<SalesContext>();
 
             services.AddScoped<IRequestHandler<AddOrderItemCommand, bool>, AddOrderItemCommandHandler>();
