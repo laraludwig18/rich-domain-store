@@ -10,7 +10,7 @@ using RichDomainStore.Catalog.Application.Services;
 namespace RichDomainStore.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/products")]
     public class ProductController : Controller
     {
         private readonly IProductAppService _productAppService;
@@ -40,7 +40,7 @@ namespace RichDomainStore.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("CategoryCode/{categoryCode}")]
+        [HttpGet("categories/code/{categoryCode}")]
         [ProducesResponseType(typeof(IEnumerable<ProductDto>), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetByCategoryCodeAsync(int categoryCode)
@@ -50,7 +50,7 @@ namespace RichDomainStore.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("Categories")]
+        [HttpGet("categories")]
         [ProducesResponseType(typeof(IEnumerable<CategoryDto>), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetCategoriesAsync()
@@ -70,17 +70,17 @@ namespace RichDomainStore.API.Controllers
             return CreatedAtRoute("GetProductByIdAsync", new { id = result.Id }, result);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> UpdateProductAsync(UpdateProductDto updateProductDTO)
+        public async Task<IActionResult> UpdateProductAsync(Guid id, [FromBody] UpdateProductDto updateProductDTO)
         {
-            var result = await _productAppService.UpdateProductAsync(updateProductDTO);
+            var result = await _productAppService.UpdateProductAsync(id, updateProductDTO);
 
             return Ok(result);
         }
 
-        [HttpPut("{id}/DebitStock")]
+        [HttpPut("{id}/debit-stock")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> DebitStockAsync(Guid id, [FromBody] UpdateStockDto updateStockDTO)
@@ -90,7 +90,7 @@ namespace RichDomainStore.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}/ReStock")]
+        [HttpPut("{id}/re-stock")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> ReStockAsync(Guid id, [FromBody] UpdateStockDto updateStockDTO)

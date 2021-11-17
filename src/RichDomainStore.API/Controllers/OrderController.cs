@@ -12,7 +12,7 @@ using RichDomainStore.Sales.Application.Queries.Dtos;
 namespace RichDomainStore.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/orders")]
     public class OrderController : ControllerBase
     {
         private readonly IGetCustomerOrdersQuery _getCustomerOrdersQuery;
