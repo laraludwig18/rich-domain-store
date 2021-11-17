@@ -18,7 +18,7 @@ namespace RichDomainStore.Sales.Application.Validators
 
             RuleFor(c => c.ProductName)
                 .NotEmpty()
-                .WithMessage("Product name is required");
+                .WithMessage("ProductName is required");
 
             RuleFor(c => c.Quantity)
                 .GreaterThan(0)

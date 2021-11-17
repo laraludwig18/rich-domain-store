@@ -1,3 +1,4 @@
+using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using MediatR;
@@ -14,7 +15,7 @@ using RichDomainStore.Sales.Application.Queries.Dtos;
 namespace RichDomainStore.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/carts")]
     public class CartController : ControllerBase
     {
         private readonly IProductAppService _productAppService;
@@ -41,19 +42,79 @@ namespace RichDomainStore.API.Controllers
             return Ok(cart);
         }
 
-        [HttpPost]
+        [HttpPost("items")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> AddItemAsync([FromBody] AddOrderItemRequest request)
         {
             var product = await _productAppService.GetByIdAsync(request.ProductId);
-
             if (product.StockQuantity < request.Quantity)
             {
                 return BadRequest("Insufficient stock");
             }
 
             var command = new AddOrderItemCommand(CustomerId, product.Id, product.Name, request.Quantity, product.Value);
+            await _mediatorHandler.SendCommandAsync(command);
+
+            if (IsValidOperation())
+            {
+                return Ok();
+            }
+
+            var errors = GetErrorMessages();
+            return BadRequest(errors);
+        }
+
+        [HttpDelete("items/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> RemoveItemAsync(Guid id)
+        {
+            var product = await _productAppService.GetByIdAsync(id);
+            if (product == null)
+            {
+                return BadRequest("Product not found");
+            }
+
+            var command = new RemoveOrderItemCommand(CustomerId, id);
+            await _mediatorHandler.SendCommandAsync(command);
+
+            if (IsValidOperation())
+            {
+                return Ok();
+            }
+
+            var errors = GetErrorMessages();
+            return BadRequest(errors);
+        }
+
+        [HttpPut("items/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> UpdateItemAsync(Guid id, [FromBody] UpdateOrderItemRequest request)
+        {
+            var product = await _productAppService.GetByIdAsync(id);
+            if (product == null)
+            {
+                return BadRequest("Product not found");
+            }
+
+            var command = new UpdateOrderItemCommand(CustomerId, id, request.Quantity);
+            await _mediatorHandler.SendCommandAsync(command);
+
+            if (IsValidOperation())
+            {
+                return Ok();
+            }
+
+            var errors = GetErrorMessages();
+            return BadRequest(errors);
+        }
+
+        [HttpPost("apply-voucher")]
+        public async Task<IActionResult> ApplyVoucherAsync([FromBody] ApplyVoucherRequest request)
+        {
+            var command = new ApplyVoucherCommand(CustomerId, request.VoucherCode);
             await _mediatorHandler.SendCommandAsync(command);
 
             if (IsValidOperation())

@@ -42,6 +42,9 @@ namespace RichDomainStore.API.Configurations
             services.AddScoped<SalesContext>();
 
             services.AddScoped<IRequestHandler<AddOrderItemCommand, bool>, AddOrderItemCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateOrderItemCommand, bool>, UpdateOrderItemCommandHandler>();
+            services.AddScoped<IRequestHandler<RemoveOrderItemCommand, bool>, RemoveOrderItemCommandHandler>();
+            services.AddScoped<IRequestHandler<ApplyVoucherCommand, bool>, ApplyVoucherCommandHandler>();
         }
     }
 }
