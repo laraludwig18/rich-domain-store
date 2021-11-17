@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation.Results;
 using RichDomainStore.Core.DomainObjects;
 using RichDomainStore.Sales.Domain.Enums;
 
@@ -37,11 +38,19 @@ namespace RichDomainStore.Sales.Domain.Entities
             _orderItems = new List<OrderItem>();
         }
 
-        public void ApplyVoucher(Voucher voucher)
+        public ValidationResult ApplyVoucher(Voucher voucher)
         {
+            var validationResult = voucher.ValidateIfApplicable();
+            if (!validationResult.IsValid)
+            {
+                return validationResult;
+            }
+
             Voucher = voucher;
             HasVoucherBeenUsed = true;
             CalculateOrderValue();
+
+            return validationResult;
         }
 
         public void CalculateOrderValue()
@@ -119,7 +128,7 @@ namespace RichDomainStore.Sales.Domain.Entities
 
             if (existentItem == null)
             {
-                throw new DomainException("O item não pertence ao pedido");
+                throw new DomainException("Item does not exists in the order");
             }
 
             _orderItems.Remove(existentItem);
