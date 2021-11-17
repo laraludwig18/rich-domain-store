@@ -20,10 +20,15 @@ namespace RichDomainStore.Catalog.Domain.Services
         public async Task<bool> DebitStockAsync(Guid productId, int quantity)
         {
             var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(false);
+            if (product == null) 
+            {
+                return false;
+            }
 
-            if (product == null) return false;
-
-            if (!product.HasStock(quantity)) return false;
+            if (!product.HasStock(quantity)) 
+            {
+                return false;
+            }
 
             product.DebitStock(quantity);
 
@@ -39,8 +44,10 @@ namespace RichDomainStore.Catalog.Domain.Services
         public async Task<bool> ReStockAsync(Guid productId, int quantity)
         {
             var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(false);
-
-            if (product == null) return false;
+            if (product == null) 
+            {
+                return false;
+            }
 
             product.ReStock(quantity);
 

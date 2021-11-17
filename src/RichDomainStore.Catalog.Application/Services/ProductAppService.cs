@@ -41,8 +41,7 @@ namespace RichDomainStore.Catalog.Application.Services
         public async Task<ProductDto> GetByIdAsync(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
-
-            if (product == null) 
+            if (product == null)
             {
                 throw new NotFoundException("Product not found");
             }
@@ -65,13 +64,19 @@ namespace RichDomainStore.Catalog.Application.Services
             return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<ProductDto> UpdateProductAsync(UpdateProductDto updateProductDTO)
+        public async Task<ProductDto> UpdateProductAsync(Guid id, UpdateProductDto updateProductDTO)
         {
-            var product = _mapper.Map<Product>(updateProductDTO);
-            _productRepository.Update(product);
+            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
+            if (product == null)
+            {
+                throw new NotFoundException("Product not found");
+            }
+
+            var updatedProduct = _mapper.Map<Product>(updateProductDTO);
+            _productRepository.Update(updatedProduct);
 
             await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
-            return _mapper.Map<ProductDto>(product);
+            return _mapper.Map<ProductDto>(updatedProduct);
         }
 
         public async Task<ProductDto> DebitStockAsync(Guid id, UpdateStockDto updateStockDTO)

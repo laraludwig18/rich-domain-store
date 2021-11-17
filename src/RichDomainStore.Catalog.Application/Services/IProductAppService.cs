@@ -13,7 +13,7 @@ namespace RichDomainStore.Catalog.Application.Services
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
 
         Task<ProductDto> AddProductAsync(AddProductDto product);
-        Task<ProductDto> UpdateProductAsync(UpdateProductDto product);
+        Task<ProductDto> UpdateProductAsync(Guid id, UpdateProductDto product);
 
         Task<ProductDto> DebitStockAsync(Guid id, UpdateStockDto updateStockDTO);
         Task<ProductDto> ReStockAsync(Guid id, UpdateStockDto updateStockDTO);
