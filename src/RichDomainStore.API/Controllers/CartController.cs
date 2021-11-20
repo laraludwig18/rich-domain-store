@@ -112,9 +112,37 @@ namespace RichDomainStore.API.Controllers
         }
 
         [HttpPost("apply-voucher")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Consumes(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> ApplyVoucherAsync([FromBody] ApplyVoucherRequest request)
         {
             var command = new ApplyVoucherCommand(CustomerId, request.VoucherCode);
+            await _mediatorHandler.SendCommandAsync(command);
+
+            if (IsValidOperation())
+            {
+                return Ok();
+            }
+
+            var errors = GetErrorMessages();
+            return BadRequest(errors);
+        }
+
+        [HttpPost("start-order")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> StartOrderAsync(CartDto request)
+        {
+            var cart = await _getCustomerCartQuery.HandleAsync(CustomerId);
+
+            var command = new StartOrderCommand(cart.OrderId,
+                CustomerId,
+                cart.TotalValue,
+                request.Payment.CardName,
+                request.Payment.CardNumber,
+                request.Payment.CardExpiration,
+                request.Payment.CardSecurityCode);
+
             await _mediatorHandler.SendCommandAsync(command);
 
             if (IsValidOperation())
