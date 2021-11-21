@@ -7,8 +7,10 @@ using RichDomainStore.Catalog.Domain.Events;
 using RichDomainStore.Catalog.Domain.Interfaces;
 using RichDomainStore.Catalog.Domain.Services;
 using RichDomainStore.Core.Communication.Mediator;
+using RichDomainStore.Core.Messages.CommonMessages.IntegrationEvents;
 using RichDomainStore.Core.Messages.CommonMessages.Notifications;
 using RichDomainStore.Sales.Application.Commands;
+using RichDomainStore.Sales.Application.Events;
 using RichDomainStore.Sales.Application.Handlers;
 using RichDomainStore.Sales.Application.Queries;
 using RichDomainStore.Sales.Data;
@@ -34,6 +36,7 @@ namespace RichDomainStore.API.Configurations
             services.AddScoped<CatalogContext>();
 
             services.AddScoped<INotificationHandler<LowProductInStockEvent>, LowProductInStockEventHandler>();
+            services.AddScoped<INotificationHandler<OrderStartedEvent>, OrderStartedEventHandler>();
 
             // Sales
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -45,6 +48,10 @@ namespace RichDomainStore.API.Configurations
             services.AddScoped<IRequestHandler<UpdateOrderItemCommand, bool>, UpdateOrderItemCommandHandler>();
             services.AddScoped<IRequestHandler<RemoveOrderItemCommand, bool>, RemoveOrderItemCommandHandler>();
             services.AddScoped<IRequestHandler<ApplyVoucherCommand, bool>, ApplyVoucherCommandHandler>();
+            services.AddScoped<IRequestHandler<StartOrderCommand, bool>, StartOrderCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelOrderProcessCommand, bool>, CancelOrderProcessCommandHandler>();
+
+            services.AddScoped<INotificationHandler<OrderStockRejectedEvent>, OrderStockRejectedEventHandler>();
         }
     }
 }

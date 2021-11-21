@@ -46,8 +46,8 @@ namespace RichDomainStore.Sales.Application.Handlers
             order.UpdateItemQuantity(orderItem, message.Quantity);
             order.AddEvent(new OrderItemUpdatedEvent(message.CustomerId, order.Id, message.ProductId, message.Quantity));
 
-            _orderRepository.UpdateItemAsync(orderItem);
-            _orderRepository.UpdateAsync(order);
+            _orderRepository.UpdateItem(orderItem);
+            _orderRepository.Update(order);
 
             return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }

@@ -46,8 +46,8 @@ namespace RichDomainStore.Sales.Application.Handlers
             order.RemoveItem(orderItem);
             order.AddEvent(new OrderItemRemovedEvent(message.CustomerId, order.Id, message.ProductId));
 
-            _orderRepository.RemoveItemAsync(orderItem);
-            _orderRepository.UpdateAsync(order);
+            _orderRepository.RemoveItem(orderItem);
+            _orderRepository.Update(order);
 
             return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }

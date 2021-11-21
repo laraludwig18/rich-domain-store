@@ -54,7 +54,7 @@ namespace RichDomainStore.Sales.Application.Handlers
             var order = Order.OrderFactory.NewDraft(customerId);
             order.AddItem(orderItem);
 
-            _orderRepository.AddAsync(order);
+            _orderRepository.Add(order);
             order.AddEvent(new DraftOrderStartedEvent(customerId, order.Id));
 
             return order;
@@ -67,11 +67,11 @@ namespace RichDomainStore.Sales.Application.Handlers
 
             if (orderItemExistent)
             {
-                _orderRepository.UpdateItemAsync(order.OrderItems.FirstOrDefault(p => p.ProductId == orderItem.ProductId));
+                _orderRepository.UpdateItem(order.OrderItems.FirstOrDefault(p => p.ProductId == orderItem.ProductId));
             }
             else
             {
-                _orderRepository.AddItemAsync(orderItem);
+                _orderRepository.AddItem(orderItem);
             }
 
             order.AddEvent(new OrderUpdatedEvent(order.CustomerId, order.Id, order.TotalValue));

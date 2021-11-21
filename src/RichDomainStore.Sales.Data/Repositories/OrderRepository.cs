@@ -51,12 +51,12 @@ namespace RichDomainStore.Sales.Data.Repositories
             return order;
         }
 
-        public void AddAsync(Order order)
+        public void Add(Order order)
         {
             _context.Orders.Add(order);
         }
 
-        public void UpdateAsync(Order order)
+        public void Update(Order order)
         {
             _context.Orders.Update(order);
         }
@@ -71,17 +71,17 @@ namespace RichDomainStore.Sales.Data.Repositories
             return await _context.OrderItems.FirstOrDefaultAsync(p => p.ProductId == productId && p.OrderId == orderId);
         }
 
-        public void AddItemAsync(OrderItem orderItem)
+        public void AddItem(OrderItem orderItem)
         {
             _context.OrderItems.Add(orderItem);
         }
 
-        public void UpdateItemAsync(OrderItem orderItem)
+        public void UpdateItem(OrderItem orderItem)
         {
             _context.OrderItems.Update(orderItem);
         }
 
-        public void RemoveItemAsync(OrderItem orderItem)
+        public void RemoveItem(OrderItem orderItem)
         {
             _context.OrderItems.Remove(orderItem);
         }

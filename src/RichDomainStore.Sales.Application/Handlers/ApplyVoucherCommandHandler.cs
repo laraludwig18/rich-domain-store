@@ -56,7 +56,7 @@ namespace RichDomainStore.Sales.Application.Handlers
 
             order.AddEvent(new VoucherAppliedEvent(message.CustomerId, order.Id, voucher.Id));
 
-            _orderRepository.UpdateAsync(order);
+            _orderRepository.Update(order);
 
             return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }
