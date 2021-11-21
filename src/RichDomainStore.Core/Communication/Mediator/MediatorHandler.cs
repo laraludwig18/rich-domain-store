@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using RichDomainStore.Core.Messages;
+using RichDomainStore.Core.Messages.CommonMessages.DomainEvents;
 using RichDomainStore.Core.Messages.CommonMessages.Notifications;
 
 namespace RichDomainStore.Core.Communication.Mediator
@@ -27,6 +28,11 @@ namespace RichDomainStore.Core.Communication.Mediator
         public async Task PublishNotificationAsync<T>(T notification) where T : DomainNotification
         {
             await _mediator.Publish(notification).ConfigureAwait(false);
+        }
+
+        public async Task PublishDomainEventAsync<T>(T notification) where T : DomainEvent
+        {
+            await _mediator.Publish(notification);
         }
     }
 }
