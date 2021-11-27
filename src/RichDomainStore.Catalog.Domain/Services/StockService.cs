@@ -31,7 +31,7 @@ namespace RichDomainStore.Catalog.Domain.Services
             return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }
 
-        public async Task<bool> DebitOrderProductListAsync(OrderProductList list)
+        public async Task<bool> DebitOrderProductListAsync(OrderProductListDto list)
         {
             foreach (var item in list.Items)
             {
@@ -81,7 +81,7 @@ namespace RichDomainStore.Catalog.Domain.Services
             return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }
 
-        public async Task<bool> ReStockOrderProductListAsync(OrderProductList list)
+        public async Task<bool> ReStockOrderProductListAsync(OrderProductListDto list)
         {
             foreach (var item in list.Items)
             {
