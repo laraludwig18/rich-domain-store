@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Core.Data;
+using RichDomainStore.Core.Extensions;
 using RichDomainStore.Core.Messages;
-using RichDomainStore.Sales.Data.Extensions;
 using RichDomainStore.Sales.Domain.Entities;
 
 namespace RichDomainStore.Sales.Data
