@@ -19,6 +19,10 @@
     <ProjectReference Include="..\RichDomainStore.Catalog.Application\RichDomainStore.Catalog.Application.csproj" />
     <ProjectReference Include="..\RichDomainStore.Sales.Application\RichDomainStore.Sales.Application.csproj" />
     <ProjectReference Include="..\RichDomainStore.Sales.Data\RichDomainStore.Sales.Data.csproj" />
+    <ProjectReference Include="..\RichDomainStore.Payments.Data\RichDomainStore.Payments.Data.csproj" />
+    <ProjectReference Include="..\RichDomainStore.Catalog.Data\RichDomainStore.Catalog.Data.csproj" />
+    <ProjectReference Include="..\RichDomainStore.Payments.AntiCorruption\RichDomainStore.Payments.AntiCorruption.csproj" />
+    <ProjectReference Include="..\RichDomainStore.Payments.Business\RichDomainStore.Payments.Business.csproj" />
   </ItemGroup>
 
 </Project>

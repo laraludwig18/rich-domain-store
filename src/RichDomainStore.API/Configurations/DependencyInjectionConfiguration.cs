@@ -9,6 +9,13 @@ using RichDomainStore.Catalog.Domain.Services;
 using RichDomainStore.Core.Communication.Mediator;
 using RichDomainStore.Core.Messages.CommonMessages.IntegrationEvents;
 using RichDomainStore.Core.Messages.CommonMessages.Notifications;
+using RichDomainStore.Payments.AntiCorruption.Implementations;
+using RichDomainStore.Payments.AntiCorruption.Interfaces;
+using RichDomainStore.Payments.Business.Events;
+using RichDomainStore.Payments.Business.Interfaces;
+using RichDomainStore.Payments.Business.Services;
+using RichDomainStore.Payments.Data;
+using RichDomainStore.Payments.Data.Repositories;
 using RichDomainStore.Sales.Application.Commands;
 using RichDomainStore.Sales.Application.Events;
 using RichDomainStore.Sales.Application.Handlers;
@@ -52,6 +59,16 @@ namespace RichDomainStore.API.Configurations
             services.AddScoped<IRequestHandler<CancelOrderProcessCommand, bool>, CancelOrderProcessCommandHandler>();
 
             services.AddScoped<INotificationHandler<OrderStockRejectedEvent>, OrderStockRejectedEventHandler>();
+
+            // Payments
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<ICreditCardPaymentFacade, CreditCardPaymentFacade>();
+            services.AddScoped<IPayPalGateway, PayPalGateway>();
+            services.AddScoped<IConfigurationManager, ConfigurationManager>();
+            services.AddScoped<PaymentContext>();
+
+            services.AddScoped<INotificationHandler<OrderStockConfirmedEvent>, OrderStockConfirmedEventHandler>();
         }
     }
 }

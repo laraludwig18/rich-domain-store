@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RichDomainStore.Catalog.Data;
+using RichDomainStore.Payments.Data;
 using RichDomainStore.Sales.Data;
 
 namespace RichDomainStore.API.Configurations
@@ -11,7 +12,7 @@ namespace RichDomainStore.API.Configurations
     {
         public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            if (services == null) 
+            if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
@@ -21,6 +22,9 @@ namespace RichDomainStore.API.Configurations
 
             services.AddDbContext<SalesContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<PaymentContext>(options =>
+                        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         }
     }
 }
