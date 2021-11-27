@@ -58,15 +58,15 @@ namespace RichDomainStore.Sales.Application.Handlers
             return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
         }
 
-        private OrderProductList GetOrderProductList(Order order)
+        private OrderProductListDto GetOrderProductList(Order order)
         {
-            var itemsList = order.OrderItems.Select(i => new Item
+            var itemsList = order.OrderItems.Select(i => new ItemDto
             {
                 Id = i.ProductId,
                 Quantity = i.Quantity
             });
 
-            return new OrderProductList
+            return new OrderProductListDto
             {
                 OrderId = order.Id,
                 Items = itemsList
