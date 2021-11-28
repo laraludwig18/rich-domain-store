@@ -4,7 +4,7 @@ using RichDomainStore.Sales.Application.Commands;
 
 namespace RichDomainStore.Sales.Application.Validators
 {
-    public class CancelOrderProcessValidator  : AbstractValidator<CancelOrderProcessCommand>
+    public class CancelOrderProcessValidator : AbstractValidator<CancelOrderProcessCommand>
     {
         public CancelOrderProcessValidator()
         {

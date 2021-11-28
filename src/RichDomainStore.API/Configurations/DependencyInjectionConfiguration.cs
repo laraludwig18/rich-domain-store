@@ -44,6 +44,7 @@ namespace RichDomainStore.API.Configurations
 
             services.AddScoped<INotificationHandler<LowProductInStockEvent>, LowProductInStockEventHandler>();
             services.AddScoped<INotificationHandler<OrderStartedEvent>, OrderStartedEventHandler>();
+            services.AddScoped<INotificationHandler<OrderProcessCanceledEvent>, OrderProcessCanceledEventHandler>();
 
             // Sales
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -57,8 +58,12 @@ namespace RichDomainStore.API.Configurations
             services.AddScoped<IRequestHandler<ApplyVoucherCommand, bool>, ApplyVoucherCommandHandler>();
             services.AddScoped<IRequestHandler<StartOrderCommand, bool>, StartOrderCommandHandler>();
             services.AddScoped<IRequestHandler<CancelOrderProcessCommand, bool>, CancelOrderProcessCommandHandler>();
+            services.AddScoped<IRequestHandler<FinishOrderCommand, bool>, FinishOrderCommandHandler>();
+            services.AddScoped<IRequestHandler<CancelOrderProcessReversingStockCommand, bool>, CancelOrderProcessReversingStockCommandHandler>();
 
             services.AddScoped<INotificationHandler<OrderStockRejectedEvent>, OrderStockRejectedEventHandler>();
+            services.AddScoped<INotificationHandler<OrderPaymentPerformedEvent>, OrderPaymentPerformedEventHandler>();
+            services.AddScoped<INotificationHandler<OrderPaymentDeniedEvent>, OrderPaymentDeniedEventHandler>();
 
             // Payments
             services.AddScoped<IPaymentRepository, PaymentRepository>();
