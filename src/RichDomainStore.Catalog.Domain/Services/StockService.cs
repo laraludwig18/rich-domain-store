@@ -85,7 +85,7 @@ namespace RichDomainStore.Catalog.Domain.Services
         {
             foreach (var item in list.Items)
             {
-                if (!await DebitStockItemAsync(item.Id, item.Quantity).ConfigureAwait(false))
+                if (!await ReStockItemAsync(item.Id, item.Quantity).ConfigureAwait(false))
                 {
                     return false;
                 }
