@@ -33,7 +33,7 @@ namespace RichDomainStore.Catalog.Data.Repositories
 
         public async Task<Product> GetByIdAsync(Guid id)
         {
-            return await _context.Products.AsNoTracking().Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id)
+            return await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id)
                 .ConfigureAwait(false);
         }
 
