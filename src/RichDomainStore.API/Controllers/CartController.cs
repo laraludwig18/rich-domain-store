@@ -131,17 +131,17 @@ namespace RichDomainStore.API.Controllers
         [HttpPost("start-order")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> StartOrderAsync(CartDto request)
+        public async Task<IActionResult> StartOrderAsync(CartPaymentDto request)
         {
             var cart = await _getCustomerCartQuery.HandleAsync(CustomerId);
 
             var command = new StartOrderCommand(cart.OrderId,
                 CustomerId,
                 cart.TotalValue,
-                request.Payment.CardName,
-                request.Payment.CardNumber,
-                request.Payment.CardExpiration,
-                request.Payment.CardSecurityCode);
+                request.CardName,
+                request.CardNumber,
+                request.CardExpiration,
+                request.CardSecurityCode);
 
             await _mediatorHandler.SendCommandAsync(command);
 
