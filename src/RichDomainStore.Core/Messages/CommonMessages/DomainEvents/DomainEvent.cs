@@ -1,10 +1,13 @@
 using System;
+using MediatR;
 
 namespace RichDomainStore.Core.Messages.CommonMessages.DomainEvents
 {
-    public abstract class DomainEvent : Event
+    public abstract class DomainEvent : Message, INotification
     {
-        public DomainEvent(Guid aggregateId)
+        public DateTime Timestamp { get; private set; }
+
+        protected DomainEvent(Guid aggregateId)
         {
             AggregateId = aggregateId;
         }

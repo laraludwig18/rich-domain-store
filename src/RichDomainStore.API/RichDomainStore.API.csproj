@@ -23,6 +23,7 @@
     <ProjectReference Include="..\RichDomainStore.Catalog.Data\RichDomainStore.Catalog.Data.csproj" />
     <ProjectReference Include="..\RichDomainStore.Payments.AntiCorruption\RichDomainStore.Payments.AntiCorruption.csproj" />
     <ProjectReference Include="..\RichDomainStore.Payments.Business\RichDomainStore.Payments.Business.csproj" />
+    <ProjectReference Include="..\EventSourcing\EventSourcing.csproj" />
   </ItemGroup>
 
 </Project>

@@ -24,7 +24,7 @@ namespace RichDomainStore.API.Configurations
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<PaymentContext>(options =>
-                        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         }
     }
 }

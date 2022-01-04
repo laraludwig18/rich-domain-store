@@ -1,3 +1,4 @@
+using EventSourcing;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using RichDomainStore.Catalog.Application.Services;
@@ -7,6 +8,7 @@ using RichDomainStore.Catalog.Domain.Events;
 using RichDomainStore.Catalog.Domain.Interfaces;
 using RichDomainStore.Catalog.Domain.Services;
 using RichDomainStore.Core.Communication.Mediator;
+using RichDomainStore.Core.Data.EventSourcing;
 using RichDomainStore.Core.Messages.CommonMessages.IntegrationEvents;
 using RichDomainStore.Core.Messages.CommonMessages.Notifications;
 using RichDomainStore.Payments.AntiCorruption.Implementations;
@@ -35,6 +37,10 @@ namespace RichDomainStore.API.Configurations
 
             // Notifications
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+
+            // Event Sourcing
+            services.AddSingleton<IEventStoreService, EventStoreService>();
+            services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
             // Catalog
             services.AddScoped<IProductRepository, ProductRepository>();
