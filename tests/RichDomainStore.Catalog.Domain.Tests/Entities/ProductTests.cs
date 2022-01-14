@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using RichDomainStore.Catalog.Domain.Entities;
 using RichDomainStore.Catalog.Domain.Tests.Fixtures;
 using RichDomainStore.Core.DomainObjects;
@@ -23,16 +24,16 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act & Assert
             var ex = Assert.Throws<DomainException>(() =>
                 new Product(
-                    string.Empty, 
-                    "Description", 
-                    false, 
-                    100, 
-                    Guid.NewGuid(), 
-                    "Image", 
+                    string.Empty,
+                    "Description",
+                    false,
+                    100,
+                    Guid.NewGuid(),
+                    "Image",
                     _validDimensions)
             );
 
-            Assert.Equal("Product name cannot be empty", ex.Message);
+            ex.Message.Should().Be("Product name cannot be empty");
         }
 
         [Fact(DisplayName = "Invalid Description")]
@@ -41,16 +42,16 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act & Assert
             var ex = Assert.Throws<DomainException>(() =>
                 new Product(
-                    "Name", 
-                    string.Empty, 
-                    false, 
-                    100, 
-                    Guid.NewGuid(), 
-                    "Image", 
+                    "Name",
+                    string.Empty,
+                    false,
+                    100,
+                    Guid.NewGuid(),
+                    "Image",
                     _validDimensions)
             );
 
-            Assert.Equal("Product description cannot be empty", ex.Message);
+            ex.Message.Should().Be("Product description cannot be empty");
         }
 
         [Fact(DisplayName = "Invalid Value")]
@@ -59,16 +60,16 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act & Assert
             var ex = Assert.Throws<DomainException>(() =>
                 new Product(
-                    "Name", 
-                    "Description", 
-                    false, 
-                    0, 
-                    Guid.NewGuid(), 
-                    "Image", 
+                    "Name",
+                    "Description",
+                    false,
+                    0,
+                    Guid.NewGuid(),
+                    "Image",
                     _validDimensions)
             );
 
-            Assert.Equal("Product value cannot be less than 1", ex.Message);
+            ex.Message.Should().Be("Product value cannot be less than 1");
         }
 
         [Fact(DisplayName = "Invalid Category")]
@@ -77,16 +78,16 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act & Assert
             var ex = Assert.Throws<DomainException>(() =>
                 new Product(
-                    "Name", 
-                    "Description", 
-                    false, 
-                    100, 
-                    Guid.Empty, 
-                    "Image", 
+                    "Name",
+                    "Description",
+                    false,
+                    100,
+                    Guid.Empty,
+                    "Image",
                     _validDimensions)
             );
 
-            Assert.Equal("Product category id cannot be empty", ex.Message);
+            ex.Message.Should().Be("Product category id cannot be empty");
         }
 
         [Fact(DisplayName = "Invalid Image")]
@@ -95,16 +96,16 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act & Assert
             var ex = Assert.Throws<DomainException>(() =>
                 new Product(
-                    "Name", 
-                    "Description", 
-                    false, 
-                    100, 
-                    Guid.NewGuid(), 
-                    string.Empty, 
+                    "Name",
+                    "Description",
+                    false,
+                    100,
+                    Guid.NewGuid(),
+                    string.Empty,
                     _validDimensions)
             );
 
-            Assert.Equal("Product image cannot be empty", ex.Message);
+            ex.Message.Should().Be("Product image cannot be empty");
         }
 
         [Fact(DisplayName = "Invalid Height")]
@@ -113,16 +114,16 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act & Assert
             var ex = Assert.Throws<DomainException>(() =>
                 new Product(
-                    "Name", 
-                    "Description", 
-                    false, 
-                    100, 
-                    Guid.NewGuid(), 
-                    "Image", 
+                    "Name",
+                    "Description",
+                    false,
+                    100,
+                    Guid.NewGuid(),
+                    "Image",
                     new Dimensions(0, 1, 1))
             );
 
-            Assert.Equal("Height cannot be less than 1", ex.Message);
+            ex.Message.Should().Be("Height cannot be less than 1");
         }
 
         [Fact(DisplayName = "Valid Product")]
@@ -132,7 +133,7 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             var product = _productFixture.GenerateValidProduct();
 
             // Assert
-            Assert.IsType<Product>(product);
+            product.Should().BeOfType<Product>();
         }
     }
 }

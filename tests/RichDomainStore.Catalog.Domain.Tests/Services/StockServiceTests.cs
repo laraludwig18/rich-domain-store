@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
 using RichDomainStore.Catalog.Domain.Entities;
@@ -43,10 +44,10 @@ namespace RichDomainStore.Catalog.Domain.Tests.Services
              .ReturnsAsync(_validProduct);
 
             // Act
-            var success = await _stockService.DebitStockAsync(_validProduct.Id, 1).ConfigureAwait(false);
+            var result = await _stockService.DebitStockAsync(_validProduct.Id, 1).ConfigureAwait(false);
 
             // Assert
-            Assert.True(success);
+            result.Should().BeTrue();
             _mocker.GetMock<IProductRepository>().Verify(r => r.Update(_validProduct), Times.Once);
             _mocker.GetMock<IProductRepository>().Verify(r => r.UnitOfWork.CommitAsync(), Times.Once);
         }
@@ -62,10 +63,10 @@ namespace RichDomainStore.Catalog.Domain.Tests.Services
              .ReturnsAsync(_validProduct);
 
             // Act
-            var success = await _stockService.DebitStockAsync(_validProduct.Id, 1).ConfigureAwait(false);
+            var result = await _stockService.DebitStockAsync(_validProduct.Id, 1).ConfigureAwait(false);
 
             // Assert
-            Assert.True(success);
+            result.Should().BeTrue();
             _mocker.GetMock<IMediatorHandler>().Verify(m =>
                 m.PublishDomainEventAsync(It.IsAny<LowProductInStockEvent>()), Times.Once);
         }
