@@ -5,6 +5,8 @@ namespace RichDomainStore.Sales.Domain.Entities
 {
     public class OrderItem : Entity
     {
+        public const int MinItemQuantity = 1;
+        public const int MaxItemQuantity = 15;
         public Guid OrderId { get; private set; }
         public Guid ProductId { get; private set; }
         public string ProductName { get; private set; }
@@ -20,11 +22,13 @@ namespace RichDomainStore.Sales.Domain.Entities
             ProductName = productName;
             Quantity = quantity;
             Value = value;
+
+            Validate();
         }
 
         protected OrderItem() { }
 
-        internal void AssociateOrder(Guid orderId)
+        public void AssociateOrder(Guid orderId)
         {
             OrderId = orderId;
         }
@@ -34,19 +38,32 @@ namespace RichDomainStore.Sales.Domain.Entities
             return Quantity * Value;
         }
 
-        internal void IncreaseQuantity(int quantity)
+        public void IncrementQuantity(int quantity)
         {
             Quantity += quantity;
+
+            ValidateQuantity();
         }
 
-        internal void UpdateQuantity(int quantity)
+        public void UpdateQuantity(int quantity)
         {
             Quantity = quantity;
+
+            ValidateQuantity();
         }
 
-        public override bool IsValid()
+        private void Validate()
         {
-            return true;
+            ValidateQuantity();
+        }
+
+        private void ValidateQuantity()
+        {
+            AssertionConcern.AssertArgumentRange(
+                Quantity,
+                MinItemQuantity,
+                MaxItemQuantity,
+                $"Product quantity cannot be less than {MinItemQuantity} or greather than {MaxItemQuantity}");
         }
     }
 }
