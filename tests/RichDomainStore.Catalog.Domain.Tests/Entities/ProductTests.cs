@@ -18,11 +18,11 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             _productFixture = productFixture;
         }
 
-        [Fact(DisplayName = "Invalid Name")]
-        public void Validate_EmptyName_ShouldThrowException()
+        [Fact]
+        public void Constructor_EmptyName_ShouldThrowException()
         {
-            // Arrange & Act & Assert
-            var ex = Assert.Throws<DomainException>(() =>
+            // Arrange & Act
+            Action act = () =>
                 new Product(
                     string.Empty,
                     "Description",
@@ -30,17 +30,17 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
                     100,
                     Guid.NewGuid(),
                     "Image",
-                    _validDimensions)
-            );
+                    _validDimensions);
 
-            ex.Message.Should().Be("Product name cannot be empty");
+            // Assert
+            act.Should().Throw<DomainException>().WithMessage("Product name cannot be empty");
         }
 
-        [Fact(DisplayName = "Invalid Description")]
-        public void Validate_EmptyDescription_ShouldThrowException()
+        [Fact]
+        public void Constructor_EmptyDescription_ShouldThrowException()
         {
-            // Arrange & Act & Assert
-            var ex = Assert.Throws<DomainException>(() =>
+            // Arrange & Act
+            Action act = () =>
                 new Product(
                     "Name",
                     string.Empty,
@@ -48,35 +48,35 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
                     100,
                     Guid.NewGuid(),
                     "Image",
-                    _validDimensions)
-            );
+                    _validDimensions);
 
-            ex.Message.Should().Be("Product description cannot be empty");
+            // Assert
+            act.Should().Throw<DomainException>().WithMessage("Product description cannot be empty");
         }
 
-        [Fact(DisplayName = "Invalid Value")]
-        public void Validate_ValueLessThan1_ShouldThrowException()
+        [Fact]
+        public void Constructor_ValueLessThanAllowed_ShouldThrowException()
         {
-            // Arrange & Act & Assert
-            var ex = Assert.Throws<DomainException>(() =>
+            // Arrange & Act
+            Action act = () =>
                 new Product(
                     "Name",
                     "Description",
                     false,
-                    0,
+                    Product.MinValue - 1,
                     Guid.NewGuid(),
                     "Image",
-                    _validDimensions)
-            );
+                    _validDimensions);
 
-            ex.Message.Should().Be("Product value cannot be less than 1");
+            // Assert
+            act.Should().Throw<DomainException>().WithMessage($"Product value cannot be less than {Product.MinValue}");
         }
 
-        [Fact(DisplayName = "Invalid Category")]
-        public void Validate_EmptyCategory_ShouldThrowException()
+        [Fact]
+        public void Constructor_EmptyCategory_ShouldThrowException()
         {
-            // Arrange & Act & Assert
-            var ex = Assert.Throws<DomainException>(() =>
+            // Arrange & Act
+            Action act = () =>
                 new Product(
                     "Name",
                     "Description",
@@ -84,17 +84,17 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
                     100,
                     Guid.Empty,
                     "Image",
-                    _validDimensions)
-            );
+                    _validDimensions);
 
-            ex.Message.Should().Be("Product category id cannot be empty");
+            // Assert
+            act.Should().Throw<DomainException>().WithMessage("Product category id cannot be empty");
         }
 
-        [Fact(DisplayName = "Invalid Image")]
-        public void Validate_EmptyImage_ShouldThrowException()
+        [Fact]
+        public void Constructor_EmptyImage_ShouldThrowException()
         {
-            // Arrange & Act & Assert
-            var ex = Assert.Throws<DomainException>(() =>
+            // Arrange & Act
+            Action act = () =>
                 new Product(
                     "Name",
                     "Description",
@@ -102,32 +102,14 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
                     100,
                     Guid.NewGuid(),
                     string.Empty,
-                    _validDimensions)
-            );
+                    _validDimensions);
 
-            ex.Message.Should().Be("Product image cannot be empty");
+            // Assert
+            act.Should().Throw<DomainException>().WithMessage("Product image cannot be empty");
         }
 
-        [Fact(DisplayName = "Invalid Height")]
-        public void Validate_HeightLessThan1_ShouldThrowException()
-        {
-            // Arrange & Act & Assert
-            var ex = Assert.Throws<DomainException>(() =>
-                new Product(
-                    "Name",
-                    "Description",
-                    false,
-                    100,
-                    Guid.NewGuid(),
-                    "Image",
-                    new Dimensions(0, 1, 1))
-            );
-
-            ex.Message.Should().Be("Height cannot be less than 1");
-        }
-
-        [Fact(DisplayName = "Valid Product")]
-        public void Validate_ValidProduct_ShouldCreateProduct()
+        [Fact]
+        public void Constructor_ValidProduct_ShouldCreateProduct()
         {
             // Arrange & Act
             var product = _productFixture.GenerateValidProduct();
