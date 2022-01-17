@@ -36,7 +36,7 @@ namespace RichDomainStore.Sales.Application.Handlers
 
             order = order == null
                 ? CreateNewDraftOrder(message.CustomerId, orderItem)
-                : AddItemToExistentOrder(order, orderItem);
+                : AddItemToExistingOrder(order, orderItem);
 
             order.AddEvent(
                 new OrderItemAddedEvent(message.CustomerId,
@@ -60,12 +60,12 @@ namespace RichDomainStore.Sales.Application.Handlers
             return order;
         }
 
-        private Order AddItemToExistentOrder(Order order, OrderItem orderItem)
+        private Order AddItemToExistingOrder(Order order, OrderItem orderItem)
         {
-            var orderItemExistent = order.CheckOrderItemExists(orderItem);
+            var orderItemExisting = order.OrderItemExists(orderItem);
             order.AddItem(orderItem);
 
-            if (orderItemExistent)
+            if (orderItemExisting)
             {
                 _orderRepository.UpdateItem(order.OrderItems.FirstOrDefault(p => p.ProductId == orderItem.ProductId));
             }
