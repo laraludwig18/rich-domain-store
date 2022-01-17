@@ -53,13 +53,13 @@ namespace RichDomainStore.Sales.Domain.Entities
             return validationResult;
         }
 
-        public void CalculateOrderValue()
+        private void CalculateOrderValue()
         {
             TotalValue = OrderItems.Sum(i => i.CalculateValue());
             CalculateTotalDiscountValue();
         }
 
-        public void CalculateTotalDiscountValue()
+        private void CalculateTotalDiscountValue()
         {
             if (!HasVoucherBeenUsed)
             {
@@ -89,27 +89,22 @@ namespace RichDomainStore.Sales.Domain.Entities
             return TotalValue * Voucher.Percentage.Value / 100;
         }
 
-        public bool CheckOrderItemExists(OrderItem item)
+        public bool OrderItemExists(OrderItem item)
         {
             return _orderItems.Any(p => p.ProductId == item.ProductId);
         }
 
         public void AddItem(OrderItem item)
         {
-            if (!item.IsValid())
-            {
-                return;
-            }
-
             item.AssociateOrder(Id);
 
-            if (CheckOrderItemExists(item))
+            if (OrderItemExists(item))
             {
-                var existentItem = _orderItems.FirstOrDefault(p => p.ProductId == item.ProductId);
-                existentItem.IncreaseQuantity(item.Quantity);
-                item = existentItem;
+                var existingItem = _orderItems.FirstOrDefault(p => p.ProductId == item.ProductId);
+                existingItem.IncrementQuantity(item.Quantity);
+                item = existingItem;
 
-                _orderItems.Remove(existentItem);
+                _orderItems.Remove(existingItem);
             }
 
             _orderItems.Add(item);
@@ -119,40 +114,30 @@ namespace RichDomainStore.Sales.Domain.Entities
 
         public void RemoveItem(OrderItem item)
         {
-            if (!item.IsValid())
-            {
-                return;
-            }
+            var existingItem = OrderItems.FirstOrDefault(p => p.ProductId == item.ProductId);
 
-            var existentItem = OrderItems.FirstOrDefault(p => p.ProductId == item.ProductId);
-
-            if (existentItem == null)
+            if (existingItem == null)
             {
                 throw new DomainException("Item does not exists in the order");
             }
 
-            _orderItems.Remove(existentItem);
+            _orderItems.Remove(existingItem);
 
             CalculateOrderValue();
         }
 
         public void UpdateItem(OrderItem item)
         {
-            if (!item.IsValid())
-            {
-                return;
-            }
-
             item.AssociateOrder(Id);
 
-            var existentItem = OrderItems.FirstOrDefault(p => p.ProductId == item.ProductId);
+            var existingItem = OrderItems.FirstOrDefault(p => p.ProductId == item.ProductId);
 
-            if (existentItem == null)
+            if (existingItem == null)
             {
                 throw new DomainException("Item does not exists in the order");
             }
 
-            _orderItems.Remove(existentItem);
+            _orderItems.Remove(existingItem);
             _orderItems.Add(item);
 
             CalculateOrderValue();
