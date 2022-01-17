@@ -37,7 +37,7 @@ namespace RichDomainStore.Sales.Application.Handlers
             }
 
             var orderItem = await _orderRepository.GetItemByOrderIdAsync(order.Id, message.ProductId).ConfigureAwait(false);
-            if (!order.CheckOrderItemExists(orderItem))
+            if (!order.OrderItemExists(orderItem))
             {
                 await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order item not found")).ConfigureAwait(false);
                 return false;
