@@ -60,7 +60,7 @@ namespace RichDomainStore.Catalog.Domain.Services
 
             product.DebitStock(quantity);
 
-            if (product.StockQuantity < 10)
+            if (product.IsLowStock())
             {
                 await _mediatorHandler.PublishDomainEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity)).ConfigureAwait(false);
             }

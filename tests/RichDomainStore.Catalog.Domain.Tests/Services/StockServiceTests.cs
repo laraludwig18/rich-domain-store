@@ -34,10 +34,10 @@ namespace RichDomainStore.Catalog.Domain.Tests.Services
         }
 
         [Fact]
-        public async Task DebitStockAsync_ProductWithStockGreatherThan10_ShouldDebitStock()
+        public async Task DebitStockAsync_ProductWithoutLowStock_ShouldDebitStock()
         {
             // Arrange
-            _validProduct.ReStock(11);
+            _validProduct.ReStock(Product.LowStockQuantity + 1);
 
             _mocker.GetMock<IProductRepository>()
              .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
@@ -53,10 +53,10 @@ namespace RichDomainStore.Catalog.Domain.Tests.Services
         }
 
         [Fact]
-        public async Task DebitStockAsync_ProductWithStockLessThan10_ShouldPublishLowProductStockEvent()
+        public async Task DebitStockAsync_ProductWithLowStock_ShouldPublishLowProductStockEvent()
         {
             // Arrange
-            _validProduct.ReStock(10);
+            _validProduct.ReStock(Product.LowStockQuantity);
 
             _mocker.GetMock<IProductRepository>()
              .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))

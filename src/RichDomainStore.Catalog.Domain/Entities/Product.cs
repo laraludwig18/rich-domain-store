@@ -5,6 +5,8 @@ namespace RichDomainStore.Catalog.Domain.Entities
 {
     public class Product : Entity, IAggregateRoot
     {
+        public const decimal MinValue = 1;
+        public const int LowStockQuantity = 10;
         public Guid CategoryId { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
@@ -17,7 +19,7 @@ namespace RichDomainStore.Catalog.Domain.Entities
         public Category Category { get; private set; }
 
         protected Product() { }
-        
+
         public Product(
             string name,
             string description,
@@ -36,7 +38,7 @@ namespace RichDomainStore.Catalog.Domain.Entities
             Image = image;
             Dimensions = dimensions;
 
-            this.Validate();
+            Validate();
         }
 
         public void Activate() => Active = true;
@@ -51,8 +53,9 @@ namespace RichDomainStore.Catalog.Domain.Entities
 
         public void ChangeDescription(string description)
         {
-            AssertionConcern.AssertArgumentNotEmpty(Description, "Product description cannot be empty");
             Description = description;
+
+            ValidateDescription();
         }
 
         public void DebitStock(int quantity)
@@ -72,13 +75,24 @@ namespace RichDomainStore.Catalog.Domain.Entities
             return StockQuantity >= quantity;
         }
 
+        public bool IsLowStock()
+        {
+            return StockQuantity < LowStockQuantity;
+        }
+
         private void Validate()
         {
             AssertionConcern.AssertArgumentNotEmpty(Name, "Product name cannot be empty");
-            AssertionConcern.AssertArgumentNotEmpty(Description, "Product description cannot be empty");
             AssertionConcern.AssertArgumentNotEquals(CategoryId, Guid.Empty, "Product category id cannot be empty");
-            AssertionConcern.AssertArgumentGreaterThan(Value, 1, "Product value cannot be less than 1");
+            AssertionConcern.AssertArgumentGreaterThan(Value, MinValue, $"Product value cannot be less than {MinValue}");
             AssertionConcern.AssertArgumentNotEmpty(Image, "Product image cannot be empty");
+
+            ValidateDescription();
+        }
+
+        private void ValidateDescription()
+        {
+            AssertionConcern.AssertArgumentNotEmpty(Description, "Product description cannot be empty");
         }
     }
 }
