@@ -2,12 +2,20 @@ using System;
 using FluentAssertions;
 using RichDomainStore.Core.DomainObjects;
 using RichDomainStore.Sales.Domain.Entities;
+using RichDomainStore.Sales.Domain.Tests.Fixtures;
 using Xunit;
 
 namespace RichDomainStore.Sales.Domain.Tests.Entities
 {
+    [Collection(nameof(OrderCollection))]
     public class OrderItemTests
     {
+        private readonly OrderFixture _orderFixture;
+        public OrderItemTests(OrderFixture orderFixture)
+        {
+            _orderFixture = orderFixture;
+        }
+
         [Fact]
         public void Constructor_QuantityGreatherThanAllowed_ShouldThrowException()
         {
@@ -38,7 +46,7 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         public void IncrementQuantity_SumOfQuantityGreatherThanAllowed_ShouldThrowException()
         {
             // Arrange 
-            var orderItem = new OrderItem(Guid.NewGuid(), "Product Name", OrderItem.MaxItemQuantity, 100);
+            var orderItem = _orderFixture.GenerateValidOrderItem(itemQuantity: OrderItem.MaxItemQuantity);
 
             // Act
             Action act = () => orderItem.IncrementQuantity(1);
@@ -53,7 +61,7 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         public void UpdateQuantity_QuantityGreatherThanAllowed_ShouldThrowException()
         {
             // Arrange 
-            var orderItem = new OrderItem(Guid.NewGuid(), "Product Name", OrderItem.MaxItemQuantity, 100);
+            var orderItem = _orderFixture.GenerateValidOrderItem(itemQuantity: OrderItem.MaxItemQuantity);
 
             // Act
             Action act = () => orderItem.UpdateQuantity(OrderItem.MaxItemQuantity + 1);
@@ -68,7 +76,7 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         public void UpdateQuantity_QuantityLessThanAllowed_ShouldThrowException()
         {
             // Arrange 
-            var orderItem = new OrderItem(Guid.NewGuid(), "Product Name", OrderItem.MinItemQuantity, 100);
+            var orderItem = _orderFixture.GenerateValidOrderItem(itemQuantity: OrderItem.MinItemQuantity);
 
             // Act
             Action act = () => orderItem.UpdateQuantity(OrderItem.MinItemQuantity - 1);
