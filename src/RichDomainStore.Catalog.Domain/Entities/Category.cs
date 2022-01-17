@@ -17,7 +17,7 @@ namespace RichDomainStore.Catalog.Domain.Entities
             Name = name;
             Code = code;
 
-            this.Validate();
+            Validate();
         }
 
         public override string ToString()
