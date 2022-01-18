@@ -1,25 +1,24 @@
-using System;
 using FluentAssertions;
-using RichDomainStore.Sales.Domain.Entities;
 using RichDomainStore.Sales.Domain.Enums;
+using RichDomainStore.Sales.Domain.Tests.Fixtures;
 using Xunit;
 
 namespace RichDomainStore.Sales.Domain.Tests.Entities
 {
+    [Collection(nameof(OrderCollection))]
     public class VoucherTests
     {
+        private readonly OrderFixture _orderFixture;
+        public VoucherTests(OrderFixture orderFixture)
+        {
+            _orderFixture = orderFixture;
+        }
+
         [Fact]
         public void ValidateIfApplicable_ValueDiscountType_ShouldBeValid()
         {
             // Arrange
-            var voucher = new Voucher(
-                code: "PROMO-15-REAIS",
-                discountValue: 15,
-                quantity: 1,
-                discountType: VoucherDiscountType.Value,
-                expirationDate: DateTime.Now.AddDays(10),
-                active: true,
-                used: false);
+            var voucher = _orderFixture.GenerateValidVoucher(discountType: VoucherDiscountType.Value, discountValue: 10);
 
             // Act
             var result = voucher.ValidateIfApplicable();
@@ -32,13 +31,7 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         public void ValidateIfApplicable_ValueDiscountType_ShouldBeInvalid()
         {
             // Arrange
-            var voucher = new Voucher(
-                code: string.Empty,
-                quantity: 0,
-                discountType: VoucherDiscountType.Value,
-                expirationDate: DateTime.Now.AddDays(-1),
-                active: false,
-                used: true);
+            var voucher = _orderFixture.GenerateInvalidVoucher(discountType: VoucherDiscountType.Value);
 
             // Act
             var result = voucher.ValidateIfApplicable();
@@ -58,14 +51,9 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         public void ValidateIfApplicable_PercentageDiscountType_ShouldBeValid()
         {
             // Arrange
-            var voucher = new Voucher(
-                code: "PROMO-10-OFF",
-                discountPercentage: 10,
-                quantity: 1,
+            var voucher = _orderFixture.GenerateValidVoucher(
                 discountType: VoucherDiscountType.Percentage,
-                expirationDate: DateTime.Now.AddDays(10),
-                active: true,
-                used: false);
+                discountPercentage: 10);
 
             // Act
             var result = voucher.ValidateIfApplicable();
@@ -78,13 +66,7 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         public void ValidateIfApplicable_PercentageDiscountType_ShouldBeInvalid()
         {
             // Arrange
-            var voucher = new Voucher(
-                code: string.Empty,
-                quantity: 0,
-                discountType: VoucherDiscountType.Percentage,
-                expirationDate: DateTime.Now.AddDays(-1),
-                active: false,
-                used: true);
+            var voucher = _orderFixture.GenerateInvalidVoucher(discountType: VoucherDiscountType.Percentage);
 
             // Act
             var result = voucher.ValidateIfApplicable();

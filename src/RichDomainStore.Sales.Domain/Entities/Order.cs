@@ -86,7 +86,7 @@ namespace RichDomainStore.Sales.Domain.Entities
                 return 0;
             }
 
-            return TotalValue * Voucher.DiscountPercentage.Value / 100;
+            return (TotalValue * Voucher.DiscountPercentage.Value) / 100;
         }
 
         public bool OrderItemExists(OrderItem item)

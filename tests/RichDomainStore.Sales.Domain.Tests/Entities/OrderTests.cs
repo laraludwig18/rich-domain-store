@@ -3,6 +3,7 @@ using System.Linq;
 using FluentAssertions;
 using RichDomainStore.Core.DomainObjects;
 using RichDomainStore.Sales.Domain.Entities;
+using RichDomainStore.Sales.Domain.Enums;
 using RichDomainStore.Sales.Domain.Tests.Fixtures;
 using Xunit;
 
@@ -130,6 +131,71 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
 
             // Act
             _draftOrder.RemoveItem(orderItem2);
+
+            // Assert
+            _draftOrder.TotalValue.Should().Be(expectedTotalValue);
+        }
+
+        [Fact]
+        public void ApplyVoucher_ValidVoucher_ShouldNotReturnErrors()
+        {
+            // Arrange
+            var voucher = _orderFixture.GenerateValidVoucher(discountType: VoucherDiscountType.Value, discountValue: 10);
+
+            // Act
+            var result = _draftOrder.ApplyVoucher(voucher);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ApplyVoucher_InvalidVoucher_ShouldReturnErrors()
+        {
+            // Arrange
+            var voucher = _orderFixture.GenerateInvalidVoucher(discountType: VoucherDiscountType.Value);
+
+            // Act
+            var result = _draftOrder.ApplyVoucher(voucher);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+        }
+
+        [Fact]
+        public void ApplyVoucher_ValueDiscountType_ShouldDiscountTotalValue()
+        {
+            // Arrange
+            var orderItem = _orderFixture.GenerateValidOrderItem(value: 200);
+            _draftOrder.AddItem(orderItem);
+
+            var voucher = _orderFixture.GenerateValidVoucher(discountType: VoucherDiscountType.Value, discountValue: 10);
+
+            var expectedTotalValue = _draftOrder.TotalValue - voucher.DiscountValue;
+
+            // Act
+            _draftOrder.ApplyVoucher(voucher);
+
+            // Assert
+            _draftOrder.TotalValue.Should().Be(expectedTotalValue);
+        }
+
+        [Fact]
+        public void ApplyVoucher_PercentageDiscountType_ShouldDiscountTotalValue()
+        {
+            // Arrange
+            var orderItem = _orderFixture.GenerateValidOrderItem(value: 200);
+            _draftOrder.AddItem(orderItem);
+
+            var voucher = _orderFixture.GenerateValidVoucher(
+                discountType: VoucherDiscountType.Percentage,
+                discountPercentage: 10);
+
+            var discountValue = (_draftOrder.TotalValue * voucher.DiscountPercentage) / 100;
+            var expectedTotalValue = _draftOrder.TotalValue - discountValue;
+
+            // Act
+            _draftOrder.ApplyVoucher(voucher);
 
             // Assert
             _draftOrder.TotalValue.Should().Be(expectedTotalValue);
