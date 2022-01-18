@@ -20,24 +20,27 @@ namespace RichDomainStore.Catalog.Domain.Events
 
         public async Task Handle(OrderStartedEvent message, CancellationToken cancellationToken)
         {
-            var success = await _stockService.DebitOrderProductListAsync(message.Products).ConfigureAwait(false);
+            var success = await _stockService.DebitOrderProductListAsync(message.Products)
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             if (success)
             {
                 await _mediatorHandler.PublishEventAsync(
-                    new OrderStockConfirmedEvent(message.OrderId,
+                    new OrderStockConfirmedEvent(
+                        message.OrderId,
                         message.CustomerId,
                         message.Total,
                         message.Products,
                         message.CardName,
                         message.CardNumber,
                         message.CardExpiration,
-                        message.CardSecurityCode)).ConfigureAwait(false);
+                        message.CardSecurityCode)).ConfigureAwait(continueOnCapturedContext: false);
             }
             else
             {
                 await _mediatorHandler.PublishEventAsync(
-                    new OrderStockRejectedEvent(message.OrderId, message.CustomerId)).ConfigureAwait(false);
+                    new OrderStockRejectedEvent(message.OrderId, message.CustomerId))
+                        .ConfigureAwait(continueOnCapturedContext: false);
             }
         }
     }

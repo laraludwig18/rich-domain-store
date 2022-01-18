@@ -29,17 +29,25 @@ namespace RichDomainStore.Sales.Application.Handlers
                 return false;
             }
 
-            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId).ConfigureAwait(false);
+            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId)
+                .ConfigureAwait(continueOnCapturedContext: false);
+
             if (order == null)
             {
-                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order not found")).ConfigureAwait(false);
+                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order not found"))
+                    .ConfigureAwait(continueOnCapturedContext: false);
+
                 return false;
             }
 
-            var orderItem = await _orderRepository.GetItemByOrderIdAsync(order.Id, message.ProductId).ConfigureAwait(false);
+            var orderItem = await _orderRepository.GetItemByOrderIdAsync(order.Id, message.ProductId)
+                .ConfigureAwait(continueOnCapturedContext: false);
+
             if (!order.OrderItemExists(orderItem))
             {
-                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order item not found")).ConfigureAwait(false);
+                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order item not found"))
+                    .ConfigureAwait(continueOnCapturedContext: false);
+
                 return false;
             }
 
@@ -49,7 +57,7 @@ namespace RichDomainStore.Sales.Application.Handlers
             _orderRepository.UpdateItem(orderItem);
             _orderRepository.Update(order);
 
-            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

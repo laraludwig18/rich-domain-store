@@ -29,17 +29,23 @@ namespace RichDomainStore.Sales.Application.Handlers
                 return false;
             }
 
-            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId).ConfigureAwait(false);
+            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId).ConfigureAwait(continueOnCapturedContext: false);
             if (order == null)
             {
-                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order not found")).ConfigureAwait(false);
+                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order not found"))
+                    .ConfigureAwait(continueOnCapturedContext: false);
+
                 return false;
             }
 
-            var voucher = await _orderRepository.GetVoucherByCodeAsync(message.VoucherCode).ConfigureAwait(false);
+            var voucher = await _orderRepository.GetVoucherByCodeAsync(message.VoucherCode)
+                .ConfigureAwait(continueOnCapturedContext: false);
+
             if (voucher == null)
             {
-                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Voucher not found"));
+                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Voucher not found"))
+                    .ConfigureAwait(continueOnCapturedContext: false);
+                    
                 return false;
             }
 
@@ -48,7 +54,8 @@ namespace RichDomainStore.Sales.Application.Handlers
             {
                 foreach (var error in validationResult.Errors)
                 {
-                    await _mediatorHandler.PublishNotificationAsync(new DomainNotification(error.ErrorCode, error.ErrorMessage));
+                    await _mediatorHandler.PublishNotificationAsync(new DomainNotification(error.ErrorCode, error.ErrorMessage))
+                        .ConfigureAwait(continueOnCapturedContext: false);
                 }
 
                 return false;
@@ -58,7 +65,7 @@ namespace RichDomainStore.Sales.Application.Handlers
 
             _orderRepository.Update(order);
 
-            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

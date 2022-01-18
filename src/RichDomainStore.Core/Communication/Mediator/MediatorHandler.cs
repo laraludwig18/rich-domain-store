@@ -20,23 +20,23 @@ namespace RichDomainStore.Core.Communication.Mediator
 
         public async Task<bool> SendCommandAsync<T>(T command) where T : Command
         {
-            return await _mediator.Send(command).ConfigureAwait(false);
+            return await _mediator.Send(command).ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task PublishEventAsync<T>(T e) where T : Event
         {
-            await _mediator.Publish(e).ConfigureAwait(false);
-            await _eventSourcingRepository.SaveEventAsync(e).ConfigureAwait(false);
+            await _mediator.Publish(e).ConfigureAwait(continueOnCapturedContext: false);
+            await _eventSourcingRepository.SaveEventAsync(e).ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task PublishNotificationAsync<T>(T notification) where T : DomainNotification
         {
-            await _mediator.Publish(notification).ConfigureAwait(false);
+            await _mediator.Publish(notification).ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task PublishDomainEventAsync<T>(T notification) where T : DomainEvent
         {
-            await _mediator.Publish(notification).ConfigureAwait(false);
+            await _mediator.Publish(notification).ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

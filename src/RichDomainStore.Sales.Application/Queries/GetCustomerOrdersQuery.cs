@@ -11,7 +11,7 @@ namespace RichDomainStore.Sales.Application.Queries
     public class GetCustomerOrdersQuery : IGetCustomerOrdersQuery
     {
         private readonly IOrderRepository _orderRepository;
-        
+
         public GetCustomerOrdersQuery(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
@@ -19,12 +19,13 @@ namespace RichDomainStore.Sales.Application.Queries
 
         public async Task<IEnumerable<OrderDto>> HandleAsync(Guid customerId)
         {
-            var orders = await _orderRepository.GetOrdersByCustomerIdAsync(customerId).ConfigureAwait(false);
+            var orders = await _orderRepository.GetOrdersByCustomerIdAsync(customerId)
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             orders = orders.Where(p => p.OrderStatus == OrderStatus.Paid || p.OrderStatus == OrderStatus.Canceled)
                 .OrderByDescending(p => p.Code);
 
-            if (!orders.Any()) 
+            if (!orders.Any())
             {
                 return null;
             }

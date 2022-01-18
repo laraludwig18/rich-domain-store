@@ -29,7 +29,7 @@ namespace RichDomainStore.Payments.Business.Events
                 CardSecurityCode = message.CardSecurityCode
             };
 
-            await _paymentService.PerformOrderPayment(orderPayment).ConfigureAwait(false);
+            await _paymentService.PerformOrderPayment(orderPayment).ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

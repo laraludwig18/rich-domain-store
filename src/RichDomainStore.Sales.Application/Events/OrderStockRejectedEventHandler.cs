@@ -18,7 +18,8 @@ namespace RichDomainStore.Sales.Application.Events
 
         public async Task Handle(OrderStockRejectedEvent message, CancellationToken cancellationToken)
         {
-            await _mediatorHandler.SendCommandAsync(new CancelOrderProcessCommand(message.OrderId, message.CustomerId)).ConfigureAwait(false);
+            await _mediatorHandler.SendCommandAsync(new CancelOrderProcessCommand(message.OrderId, message.CustomerId))
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

@@ -22,24 +22,25 @@ namespace RichDomainStore.Catalog.Data.Repositories
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _context.Products.AsNoTracking().Include(p => p.Category).ToListAsync().ConfigureAwait(false);
+            return await _context.Products.AsNoTracking().Include(p => p.Category).ToListAsync()
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task<IEnumerable<Product>> GetByCategoryCodeAsync(int code)
         {
             return await _context.Products.AsNoTracking().Include(p => p.Category).Where(c => c.Category.Code == code)
-                .ToListAsync().ConfigureAwait(false);
+                .ToListAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task<Product> GetByIdAsync(Guid id)
         {
             return await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id)
-                .ConfigureAwait(false);
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {
-            return await _context.Categories.AsNoTracking().ToListAsync().ConfigureAwait(false);
+            return await _context.Categories.AsNoTracking().ToListAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public void Add(Product product)

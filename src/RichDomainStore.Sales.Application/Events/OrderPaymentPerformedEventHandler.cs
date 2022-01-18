@@ -19,7 +19,7 @@ namespace RichDomainStore.Sales.Application.Events
         public async Task Handle(OrderPaymentPerformedEvent message, CancellationToken cancellationToken)
         {
             await _mediatorHandler.SendCommandAsync(new FinishOrderCommand(message.OrderId, message.CustomerId))
-                .ConfigureAwait(false);
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

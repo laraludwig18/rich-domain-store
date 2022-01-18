@@ -59,7 +59,7 @@ namespace RichDomainStore.Payments.Data
 
             if (success)
             {
-                await _mediatorHandler.PublishEventsAsync(this).ConfigureAwait(false);
+                await _mediatorHandler.PublishEventsAsync(this).ConfigureAwait(continueOnCapturedContext: false);
             }
 
             return success;

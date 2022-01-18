@@ -24,10 +24,10 @@ namespace RichDomainStore.Core.Extensions
             var tasks = domainEvents
                 .Select(async (domainEvent) =>
                 {
-                    await mediator.PublishEventAsync(domainEvent).ConfigureAwait(false);
+                    await mediator.PublishEventAsync(domainEvent).ConfigureAwait(continueOnCapturedContext: false);
                 });
 
-            await Task.WhenAll(tasks).ConfigureAwait(false);
+            await Task.WhenAll(tasks).ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace RichDomainStore.Sales.Application.Queries
     public class GetCustomerCartQuery : IGetCustomerCartQuery
     {
         private readonly IOrderRepository _orderRepository;
-        
+
         public GetCustomerCartQuery(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
@@ -16,8 +16,10 @@ namespace RichDomainStore.Sales.Application.Queries
 
         public async Task<CartDto> HandleAsync(Guid customerId)
         {
-            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(customerId).ConfigureAwait(false);
-            if (order == null) 
+            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(customerId)
+                .ConfigureAwait(continueOnCapturedContext: false);
+
+            if (order == null)
             {
                 return null;
             }

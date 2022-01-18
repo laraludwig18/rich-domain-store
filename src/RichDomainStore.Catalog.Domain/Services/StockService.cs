@@ -21,14 +21,14 @@ namespace RichDomainStore.Catalog.Domain.Services
 
         public async Task<bool> DebitStockAsync(Guid productId, int quantity)
         {
-            var success = await DebitStockItemAsync(productId, quantity).ConfigureAwait(false);
+            var success = await DebitStockItemAsync(productId, quantity).ConfigureAwait(continueOnCapturedContext: false);
 
             if (!success)
             {
                 return false;
             }
 
-            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task<bool> DebitOrderProductListAsync(OrderProductListDto list)
@@ -41,12 +41,12 @@ namespace RichDomainStore.Catalog.Domain.Services
                 }
             }
 
-            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         private async Task<bool> DebitStockItemAsync(Guid productId, int quantity)
         {
-            var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(continueOnCapturedContext: false);
             if (product == null)
             {
                 return false;
@@ -54,7 +54,9 @@ namespace RichDomainStore.Catalog.Domain.Services
 
             if (!product.HasStock(quantity))
             {
-                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("Stock", $"Product - {product.Name} is out of stock"));
+                await _mediatorHandler.PublishNotificationAsync(
+                    new DomainNotification("Stock", $"Product - {product.Name} is out of stock"));
+                    
                 return false;
             }
 
@@ -62,7 +64,8 @@ namespace RichDomainStore.Catalog.Domain.Services
 
             if (product.IsLowStock())
             {
-                await _mediatorHandler.PublishDomainEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity)).ConfigureAwait(false);
+                await _mediatorHandler.PublishDomainEventAsync(new LowProductInStockEvent(product.Id, product.StockQuantity))
+                    .ConfigureAwait(continueOnCapturedContext: false);
             }
 
             _productRepository.Update(product);
@@ -71,14 +74,14 @@ namespace RichDomainStore.Catalog.Domain.Services
 
         public async Task<bool> ReStockAsync(Guid productId, int quantity)
         {
-            var success = await ReStockItemAsync(productId, quantity).ConfigureAwait(false);
+            var success = await ReStockItemAsync(productId, quantity).ConfigureAwait(continueOnCapturedContext: false);
 
             if (!success)
             {
                 return false;
             }
 
-            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task<bool> ReStockOrderProductListAsync(OrderProductListDto list)
@@ -91,12 +94,12 @@ namespace RichDomainStore.Catalog.Domain.Services
                 }
             }
 
-            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         private async Task<bool> ReStockItemAsync(Guid productId, int quantity)
         {
-            var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(productId).ConfigureAwait(continueOnCapturedContext: false);
             if (product == null)
             {
                 return false;

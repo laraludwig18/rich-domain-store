@@ -28,19 +28,19 @@ namespace RichDomainStore.Catalog.Application.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            var products = await _productRepository.GetAllAsync().ConfigureAwait(false);
+            var products = await _productRepository.GetAllAsync().ConfigureAwait(continueOnCapturedContext: false);
             return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
         public async Task<IEnumerable<ProductDto>> GetByCategoryCodeAsync(int code)
         {
-            var products = await _productRepository.GetByCategoryCodeAsync(code).ConfigureAwait(false);
+            var products = await _productRepository.GetByCategoryCodeAsync(code).ConfigureAwait(continueOnCapturedContext: false);
             return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
         public async Task<ProductDto> GetByIdAsync(Guid id)
         {
-            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(continueOnCapturedContext: false);
             if (product == null)
             {
                 throw new NotFoundException("Product not found");
@@ -51,7 +51,7 @@ namespace RichDomainStore.Catalog.Application.Services
 
         public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
         {
-            var categories = await _productRepository.GetCategoriesAsync().ConfigureAwait(false);
+            var categories = await _productRepository.GetCategoriesAsync().ConfigureAwait(continueOnCapturedContext: false);
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
 
@@ -60,13 +60,13 @@ namespace RichDomainStore.Catalog.Application.Services
             var product = _mapper.Map<Product>(createProductDTO);
             _productRepository.Add(product);
 
-            await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
             return _mapper.Map<ProductDto>(product);
         }
 
         public async Task<ProductDto> UpdateProductAsync(Guid id, UpdateProductDto updateProductDTO)
         {
-            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(continueOnCapturedContext: false);
             if (product == null)
             {
                 throw new NotFoundException("Product not found");
@@ -75,7 +75,7 @@ namespace RichDomainStore.Catalog.Application.Services
             var updatedProduct = _mapper.Map<Product>(updateProductDTO);
             _productRepository.Update(updatedProduct);
 
-            await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            await _productRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
             return _mapper.Map<ProductDto>(updatedProduct);
         }
 
@@ -86,7 +86,7 @@ namespace RichDomainStore.Catalog.Application.Services
                 throw new DomainException("Failed to debit stock");
             }
 
-            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(continueOnCapturedContext: false);
             return _mapper.Map<ProductDto>(product);
         }
 
@@ -97,7 +97,7 @@ namespace RichDomainStore.Catalog.Application.Services
                 throw new DomainException("Failed to restock");
             }
 
-            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(false);
+            var product = await _productRepository.GetByIdAsync(id).ConfigureAwait(continueOnCapturedContext: false);
             return _mapper.Map<ProductDto>(product);
         }
 

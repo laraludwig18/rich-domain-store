@@ -17,7 +17,8 @@ namespace RichDomainStore.Catalog.Domain.Events
 
         public async Task Handle(OrderProcessCanceledEvent message, CancellationToken cancellationToken)
         {
-            await _stockService.ReStockOrderProductListAsync(message.Products).ConfigureAwait(false);
+            await _stockService.ReStockOrderProductListAsync(message.Products)
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }

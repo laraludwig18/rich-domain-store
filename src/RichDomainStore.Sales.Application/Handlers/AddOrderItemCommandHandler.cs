@@ -31,22 +31,29 @@ namespace RichDomainStore.Sales.Application.Handlers
                 return false;
             }
 
-            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId).ConfigureAwait(false);
-            var orderItem = new OrderItem(message.ProductId, message.ProductName, message.Quantity, message.Value);
+            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId)
+                .ConfigureAwait(continueOnCapturedContext: false);
+            
+            var orderItem = new OrderItem(
+                    productId: message.ProductId,
+                    productName: message.ProductName,
+                    quantity: message.Quantity,
+                    value: message.Value);
 
             order = order == null
                 ? CreateNewDraftOrder(message.CustomerId, orderItem)
                 : AddItemToExistingOrder(order, orderItem);
 
             order.AddEvent(
-                new OrderItemAddedEvent(message.CustomerId,
+                new OrderItemAddedEvent(
+                    message.CustomerId,
                     order.Id,
                     message.ProductId,
                     message.ProductName,
                     message.Value,
                     message.Quantity));
 
-            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         private Order CreateNewDraftOrder(Guid customerId, OrderItem orderItem)

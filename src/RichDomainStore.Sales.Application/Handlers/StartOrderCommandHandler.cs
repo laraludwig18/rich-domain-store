@@ -32,10 +32,14 @@ namespace RichDomainStore.Sales.Application.Handlers
                 return false;
             }
 
-            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId).ConfigureAwait(false);
+            var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId)
+                .ConfigureAwait(continueOnCapturedContext: false);
+
             if (order == null)
             {
-                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order not found")).ConfigureAwait(false);
+                await _mediatorHandler.PublishNotificationAsync(new DomainNotification("order", "Order not found"))
+                    .ConfigureAwait(continueOnCapturedContext: false);
+
                 return false;
             }
 
@@ -55,7 +59,7 @@ namespace RichDomainStore.Sales.Application.Handlers
 
             _orderRepository.Update(order);
 
-            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+            return await _orderRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
         }
 
         private OrderProductListDto GetOrderProductList(Order order)

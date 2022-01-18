@@ -57,19 +57,19 @@ namespace RichDomainStore.Payments.Business.Services
                 _paymentRepository.Add(payment);
                 _paymentRepository.AddTransaction(transaction);
 
-                await _paymentRepository.UnitOfWork.CommitAsync().ConfigureAwait(false);
+                await _paymentRepository.UnitOfWork.CommitAsync().ConfigureAwait(continueOnCapturedContext: false);
                 return transaction;
             }
 
             await _mediatorHandler.PublishNotificationAsync(
-                    new DomainNotification("payment", "The operator refused payment")).ConfigureAwait(false);
+                    new DomainNotification("payment", "The operator refused payment")).ConfigureAwait(continueOnCapturedContext: false);
 
             await _mediatorHandler.PublishEventAsync(
                     new OrderPaymentDeniedEvent(order.Id, 
                         orderPayment.CustomerId, 
                         transaction.PaymentId, 
                         transaction.Id, 
-                        order.Value)).ConfigureAwait(false);
+                        order.Value)).ConfigureAwait(continueOnCapturedContext: false);
 
             return transaction;
         }

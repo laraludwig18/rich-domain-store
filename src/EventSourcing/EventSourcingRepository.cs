@@ -26,14 +26,14 @@ namespace EventSourcing
                     e.AggregateId.ToString(),
                     ExpectedVersion.Any,
                     FormatEvent(e))
-                .ConfigureAwait(false);
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
 
         public async Task<IEnumerable<StoredEvent>> GetEventsByAggregateIdAsync(Guid aggregateId)
         {
             var events = await _eventStoreService.GetConnection()
                 .ReadStreamEventsForwardAsync(aggregateId.ToString(), 0, 500, false)
-                .ConfigureAwait(false);
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             var eventList = events.Events.Select(resolvedEvent => {
                 var dataEncoded = Encoding.UTF8.GetString(resolvedEvent.Event.Data);
