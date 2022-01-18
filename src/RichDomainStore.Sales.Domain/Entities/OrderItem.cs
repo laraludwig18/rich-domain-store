@@ -28,24 +28,24 @@ namespace RichDomainStore.Sales.Domain.Entities
 
         protected OrderItem() { }
 
-        public void AssociateOrder(Guid orderId)
+        internal void AssociateOrder(Guid orderId)
         {
             OrderId = orderId;
         }
 
-        public decimal CalculateValue()
+        internal decimal CalculateValue()
         {
             return Quantity * Value;
         }
 
-        public void IncrementQuantity(int quantity)
+        internal void IncrementQuantity(int quantity)
         {
             Quantity += quantity;
 
             ValidateQuantity();
         }
 
-        public void UpdateQuantity(int quantity)
+        internal void UpdateQuantity(int quantity)
         {
             Quantity = quantity;
 
