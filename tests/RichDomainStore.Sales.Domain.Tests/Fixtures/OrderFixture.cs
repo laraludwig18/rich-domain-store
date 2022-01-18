@@ -13,17 +13,17 @@ namespace RichDomainStore.Sales.Domain.Tests.Fixtures
     {
         public Order GenerateDraftOrder()
         {
-            return Order.OrderFactory.NewDraft(Guid.NewGuid());
+            return Order.OrderFactory.NewDraft(customerId: Guid.NewGuid());
         }
 
-        public OrderItem GenerateValidOrderItem(int itemQuantity, decimal value = 1)
+        public OrderItem GenerateValidOrderItem(Guid productId = default(Guid), int itemQuantity = 1, decimal value = 1)
         {
             return new Faker<OrderItem>("pt_BR")
                 .CustomInstantiator(faker => new OrderItem(
-                    Guid.NewGuid(),
-                    faker.Commerce.ProductName(),
-                    itemQuantity,
-                    value));
+                    productId: productId == Guid.Empty ? Guid.NewGuid() : productId,
+                    productName: faker.Commerce.ProductName(),
+                    quantity: itemQuantity,
+                    value: value));
         }
 
         public void Dispose()

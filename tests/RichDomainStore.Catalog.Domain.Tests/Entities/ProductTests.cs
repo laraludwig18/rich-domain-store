@@ -14,7 +14,7 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
         private readonly ProductFixture _productFixture;
         public ProductTests(ProductFixture productFixture)
         {
-            _validDimensions = new Dimensions(1, 1, 1);
+            _validDimensions = new Dimensions(height: 1, width: 1, depth: 1);
             _productFixture = productFixture;
         }
 
@@ -24,13 +24,13 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act
             Action act = () =>
                 new Product(
-                    string.Empty,
-                    "Description",
-                    false,
-                    100,
-                    Guid.NewGuid(),
-                    "Image",
-                    _validDimensions);
+                    name: string.Empty,
+                    description: "Description",
+                    active: false,
+                    value: 100,
+                    categoryId: Guid.NewGuid(),
+                    image: "Image",
+                    dimensions: _validDimensions);
 
             // Assert
             act.Should().Throw<DomainException>().WithMessage("Product name cannot be empty");
@@ -42,13 +42,13 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act
             Action act = () =>
                 new Product(
-                    "Name",
-                    string.Empty,
-                    false,
-                    100,
-                    Guid.NewGuid(),
-                    "Image",
-                    _validDimensions);
+                    name: "Name",
+                    description: string.Empty,
+                    active: false,
+                    value: 100,
+                    categoryId: Guid.NewGuid(),
+                    image: "Image",
+                    dimensions: _validDimensions);
 
             // Assert
             act.Should().Throw<DomainException>().WithMessage("Product description cannot be empty");
@@ -60,13 +60,13 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act
             Action act = () =>
                 new Product(
-                    "Name",
-                    "Description",
-                    false,
-                    Product.MinValue - 1,
-                    Guid.NewGuid(),
-                    "Image",
-                    _validDimensions);
+                    name: "Name",
+                    description: "Description",
+                    active: false,
+                    value: Product.MinValue - 1,
+                    categoryId: Guid.NewGuid(),
+                    image: "Image",
+                    dimensions: _validDimensions);
 
             // Assert
             act.Should().Throw<DomainException>().WithMessage($"Product value cannot be less than {Product.MinValue}");
@@ -78,13 +78,13 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act
             Action act = () =>
                 new Product(
-                    "Name",
-                    "Description",
-                    false,
-                    100,
-                    Guid.Empty,
-                    "Image",
-                    _validDimensions);
+                    name: "Name",
+                    description: "Description",
+                    active: false,
+                    value: 100,
+                    categoryId: Guid.Empty,
+                    image: "Image",
+                    dimensions: _validDimensions);
 
             // Assert
             act.Should().Throw<DomainException>().WithMessage("Product category id cannot be empty");
@@ -96,13 +96,13 @@ namespace RichDomainStore.Catalog.Domain.Tests.Entities
             // Arrange & Act
             Action act = () =>
                 new Product(
-                    "Name",
-                    "Description",
-                    false,
-                    100,
-                    Guid.NewGuid(),
-                    string.Empty,
-                    _validDimensions);
+                    name: "Name",
+                    description: "Description",
+                    active: false,
+                    value: 100,
+                    categoryId: Guid.NewGuid(),
+                    image: string.Empty,
+                    dimensions: _validDimensions);
 
             // Assert
             act.Should().Throw<DomainException>().WithMessage("Product image cannot be empty");

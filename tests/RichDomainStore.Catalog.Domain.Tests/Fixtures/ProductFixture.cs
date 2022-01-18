@@ -15,13 +15,13 @@ namespace RichDomainStore.Catalog.Domain.Tests.Fixtures
         {
             return new Faker<Product>("pt_BR")
                 .CustomInstantiator(faker => new Product(
-                    faker.Commerce.ProductName(),
-                    faker.Random.Words(),
-                    faker.Random.Bool(),
-                    faker.Finance.Amount(1, decimal.MaxValue),
-                    Guid.NewGuid(),
-                    faker.Image.PicsumUrl(),
-                    new Dimensions(1, 1, 1)));
+                    name: faker.Commerce.ProductName(),
+                    description: faker.Random.Words(),
+                    active: faker.Random.Bool(),
+                    value: faker.Finance.Amount(1, decimal.MaxValue),
+                    categoryId: Guid.NewGuid(),
+                    image: faker.Image.PicsumUrl(),
+                    dimensions: new Dimensions(height: 1, width: 1, depth: 1)));
         }
 
         public void Dispose()

@@ -44,7 +44,8 @@ namespace RichDomainStore.Catalog.Domain.Tests.Services
              .ReturnsAsync(_validProduct);
 
             // Act
-            var result = await _stockService.DebitStockAsync(_validProduct.Id, 1).ConfigureAwait(false);
+            var result = await _stockService.DebitStockAsync(productId: _validProduct.Id, quantity: 1)
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             // Assert
             result.Should().BeTrue();
@@ -63,7 +64,8 @@ namespace RichDomainStore.Catalog.Domain.Tests.Services
              .ReturnsAsync(_validProduct);
 
             // Act
-            var result = await _stockService.DebitStockAsync(_validProduct.Id, 1).ConfigureAwait(false);
+            var result = await _stockService.DebitStockAsync(productId: _validProduct.Id, quantity: 1)
+                .ConfigureAwait(continueOnCapturedContext: false);
 
             // Assert
             result.Should().BeTrue();

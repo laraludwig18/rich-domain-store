@@ -21,7 +21,11 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         {
             // Arrange & Act
             Action act = () =>
-                new OrderItem(Guid.NewGuid(), "Product Name", OrderItem.MaxItemQuantity + 1, 100);
+                new OrderItem(
+                    productId: Guid.NewGuid(),
+                    productName: "Product Name",
+                    quantity: OrderItem.MaxItemQuantity + 1,
+                    value: 100);
 
             // Assert
             act.Should()
@@ -34,7 +38,11 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
         {
             // Arrange & Act
             Action act = () =>
-                new OrderItem(Guid.NewGuid(), "Product Name", OrderItem.MinItemQuantity - 1, 100);
+                new OrderItem(
+                    productId: Guid.NewGuid(),
+                    productName: "Product Name",
+                    quantity: OrderItem.MinItemQuantity - 1,
+                    value: 100);
 
             // Assert
             act.Should()
