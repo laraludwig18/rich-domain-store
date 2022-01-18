@@ -106,14 +106,17 @@ namespace RichDomainStore.Sales.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal?>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("DiscountValue")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("Percentage")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -123,9 +126,6 @@ namespace RichDomainStore.Sales.Data.Migrations
 
                     b.Property<DateTime?>("UsedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("VoucherDiscountType")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

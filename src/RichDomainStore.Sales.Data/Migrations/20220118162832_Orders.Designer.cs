@@ -10,7 +10,7 @@ using RichDomainStore.Sales.Data;
 namespace RichDomainStore.Sales.Data.Migrations
 {
     [DbContext(typeof(SalesContext))]
-    [Migration("20211031155257_Orders")]
+    [Migration("20220118162832_Orders")]
     partial class Orders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,14 +108,17 @@ namespace RichDomainStore.Sales.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal?>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("DiscountValue")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("Percentage")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -125,9 +128,6 @@ namespace RichDomainStore.Sales.Data.Migrations
 
                     b.Property<DateTime?>("UsedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("VoucherDiscountType")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

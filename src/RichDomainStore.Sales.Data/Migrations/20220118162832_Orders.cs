@@ -17,10 +17,10 @@ namespace RichDomainStore.Sales.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Percentage = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DiscountPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DiscountValue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    VoucherDiscountType = table.Column<int>(type: "int", nullable: false),
+                    DiscountType = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
