@@ -66,7 +66,7 @@ namespace RichDomainStore.Sales.Domain.Entities
                 return;
             };
 
-            var discount = Voucher.VoucherDiscountType switch
+            var discount = Voucher.DiscountType switch
             {
                 VoucherDiscountType.Percentage => CalculatePercentageDiscount(),
                 VoucherDiscountType.Value => Voucher.DiscountValue.HasValue ? Voucher.DiscountValue.Value : 0,
@@ -81,12 +81,12 @@ namespace RichDomainStore.Sales.Domain.Entities
 
         private decimal CalculatePercentageDiscount()
         {
-            if (!Voucher.Percentage.HasValue)
+            if (!Voucher.DiscountPercentage.HasValue)
             {
                 return 0;
             }
 
-            return TotalValue * Voucher.Percentage.Value / 100;
+            return TotalValue * Voucher.DiscountPercentage.Value / 100;
         }
 
         public bool OrderItemExists(OrderItem item)
