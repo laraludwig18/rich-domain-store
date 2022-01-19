@@ -200,5 +200,47 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
             // Assert
             _draftOrder.TotalValue.Should().Be(expectedTotalValue);
         }
+
+        [Fact]
+        public void ApplyVoucher_DiscountGreatherThanTotalValue_ShouldSetTotalValueToZero()
+        {
+            // Arrange
+            var orderItem = _orderFixture.GenerateValidOrderItem(value: 10);
+            _draftOrder.AddItem(orderItem);
+
+            var voucher = _orderFixture.GenerateValidVoucher(discountType: VoucherDiscountType.Value, discountValue: 15);
+
+            // Act
+            _draftOrder.ApplyVoucher(voucher);
+
+            // Assert
+            _draftOrder.TotalValue.Should().Be(0);
+        }
+
+        [Fact]
+        public void AddItem_NewItemWithVoucherApplied_ShouldUpdateDiscountValue()
+        {
+            // Arrange
+            var orderItem = _orderFixture.GenerateValidOrderItem(value: 200);
+            _draftOrder.AddItem(orderItem);
+
+            var voucher = _orderFixture.GenerateValidVoucher(
+                discountType: VoucherDiscountType.Percentage,
+                discountPercentage: 15);
+
+            _draftOrder.ApplyVoucher(voucher);
+
+            var newOrderItem = _orderFixture.GenerateValidOrderItem(value: 100);
+
+            // Act
+            _draftOrder.AddItem(newOrderItem);
+
+            // Assert
+            var totalValue = _draftOrder.OrderItems.Sum(i => i.Quantity * i.Value);
+            var discountValue = (totalValue * voucher.DiscountPercentage) / 100;
+            var expectedTotalValue = totalValue - discountValue;
+
+            _draftOrder.TotalValue.Should().Be(expectedTotalValue);
+        }
     }
 }
