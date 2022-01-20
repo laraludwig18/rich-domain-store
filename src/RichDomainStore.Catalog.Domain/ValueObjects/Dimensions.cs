@@ -1,6 +1,6 @@
 using RichDomainStore.Core.DomainObjects;
 
-namespace RichDomainStore.Catalog.Domain
+namespace RichDomainStore.Catalog.Domain.ValueObjects
 {
     public class Dimensions
     {

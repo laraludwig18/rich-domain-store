@@ -1,9 +1,10 @@
 using System;
 using Bogus;
 using RichDomainStore.Catalog.Domain.Entities;
+using RichDomainStore.Catalog.Domain.ValueObjects;
 using Xunit;
 
-namespace RichDomainStore.Catalog.Domain.Tests.Fixtures
+namespace RichDomainStore.Catalog.UnitTests.Fixtures
 {
     [CollectionDefinition(nameof(ProductCollection))]
     public class ProductCollection : ICollectionFixture<ProductFixture>

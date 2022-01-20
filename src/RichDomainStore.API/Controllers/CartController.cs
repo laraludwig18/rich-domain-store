@@ -53,7 +53,13 @@ namespace RichDomainStore.API.Controllers
                 return BadRequest("Insufficient stock");
             }
 
-            var command = new AddOrderItemCommand(CustomerId, product.Id, product.Name, request.Quantity, product.Value);
+            var command = new AddOrderItemCommand(
+                customerId: CustomerId,
+                productId: product.Id,
+                productName: product.Name,
+                quantity: request.Quantity,
+                value: product.Value);
+
             await _mediatorHandler.SendCommandAsync(command);
 
             if (IsValidOperation())

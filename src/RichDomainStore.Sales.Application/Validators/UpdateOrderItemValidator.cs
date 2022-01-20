@@ -1,6 +1,7 @@
 using System;
 using FluentValidation;
 using RichDomainStore.Sales.Application.Commands;
+using RichDomainStore.Sales.Domain.Entities;
 
 namespace RichDomainStore.Sales.Application.Validators
 {
@@ -17,12 +18,10 @@ namespace RichDomainStore.Sales.Application.Validators
                 .WithMessage("ProductId is invalid");
 
             RuleFor(c => c.Quantity)
-                .GreaterThan(0)
-                .WithMessage("The minimum quantity of an item is 1");
-
-            RuleFor(c => c.Quantity)
-                .LessThan(15)
-                .WithMessage("The maximum quantity of an item is 15");
+                .GreaterThanOrEqualTo(OrderItem.MinItemQuantity)
+                .WithMessage($"The minimum quantity of an item is {OrderItem.MinItemQuantity}")
+                .LessThanOrEqualTo(OrderItem.MaxItemQuantity)
+                .WithMessage($"The maximum quantity of an item is {OrderItem.MaxItemQuantity}");
         }
     }
 }

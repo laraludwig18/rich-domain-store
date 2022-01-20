@@ -1,11 +1,12 @@
 using System;
 using FluentAssertions;
 using RichDomainStore.Catalog.Domain.Entities;
-using RichDomainStore.Catalog.Domain.Tests.Fixtures;
+using RichDomainStore.Catalog.Domain.ValueObjects;
+using RichDomainStore.Catalog.UnitTests.Fixtures;
 using RichDomainStore.Core.DomainObjects;
 using Xunit;
 
-namespace RichDomainStore.Catalog.Domain.Tests.Entities
+namespace RichDomainStore.Catalog.UnitTests.Domain.Entities
 {
     [Collection(nameof(ProductCollection))]
     public class ProductTests

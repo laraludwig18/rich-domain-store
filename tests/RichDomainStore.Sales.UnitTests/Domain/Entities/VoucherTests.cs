@@ -1,9 +1,9 @@
 using FluentAssertions;
 using RichDomainStore.Sales.Domain.Enums;
-using RichDomainStore.Sales.Domain.Tests.Fixtures;
+using RichDomainStore.Sales.UnitTests.Fixtures;
 using Xunit;
 
-namespace RichDomainStore.Sales.Domain.Tests.Entities
+namespace RichDomainStore.Sales.UnitTests.Domain.Entities
 {
     [Collection(nameof(OrderCollection))]
     public class VoucherTests
@@ -39,12 +39,12 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
             // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().HaveCount(6).And.SatisfyRespectively(
-                first => first.ErrorMessage.Should().Be("Voucher code cannot be empty."),
-                second => second.ErrorMessage.Should().Be("Voucher is expired."),
-                third => third.ErrorMessage.Should().Be("Voucher is not valid."),
-                fourth => fourth.ErrorMessage.Should().Be("Voucher has already been used."),
-                fifth => fifth.ErrorMessage.Should().Be("Voucher not available."),
-                sixth => sixth.ErrorMessage.Should().Be("Voucher discount value must be greather than 0."));
+                first => first.ErrorMessage.Should().Be("Voucher code cannot be empty"),
+                second => second.ErrorMessage.Should().Be("Voucher is expired"),
+                third => third.ErrorMessage.Should().Be("Voucher is not valid"),
+                fourth => fourth.ErrorMessage.Should().Be("Voucher has already been used"),
+                fifth => fifth.ErrorMessage.Should().Be("Voucher not available"),
+                sixth => sixth.ErrorMessage.Should().Be("Voucher discount value must be greather than 0"));
         }
 
         [Fact]
@@ -74,12 +74,12 @@ namespace RichDomainStore.Sales.Domain.Tests.Entities
             // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().HaveCount(6).And.SatisfyRespectively(
-                first => first.ErrorMessage.Should().Be("Voucher code cannot be empty."),
-                second => second.ErrorMessage.Should().Be("Voucher is expired."),
-                third => third.ErrorMessage.Should().Be("Voucher is not valid."),
-                fourth => fourth.ErrorMessage.Should().Be("Voucher has already been used."),
-                fifth => fifth.ErrorMessage.Should().Be("Voucher not available."),
-                sixth => sixth.ErrorMessage.Should().Be("Voucher discount percentage must be greather than 0."));
+                first => first.ErrorMessage.Should().Be("Voucher code cannot be empty"),
+                second => second.ErrorMessage.Should().Be("Voucher is expired"),
+                third => third.ErrorMessage.Should().Be("Voucher is not valid"),
+                fourth => fourth.ErrorMessage.Should().Be("Voucher has already been used"),
+                fifth => fifth.ErrorMessage.Should().Be("Voucher not available"),
+                sixth => sixth.ErrorMessage.Should().Be("Voucher discount percentage must be greather than 0"));
         }
     }
 }

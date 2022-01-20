@@ -4,10 +4,10 @@ using FluentAssertions;
 using RichDomainStore.Core.DomainObjects;
 using RichDomainStore.Sales.Domain.Entities;
 using RichDomainStore.Sales.Domain.Enums;
-using RichDomainStore.Sales.Domain.Tests.Fixtures;
+using RichDomainStore.Sales.UnitTests.Fixtures;
 using Xunit;
 
-namespace RichDomainStore.Sales.Domain.Tests.Entities
+namespace RichDomainStore.Sales.UnitTests.Domain.Entities
 {
     [Collection(nameof(OrderCollection))]
     public class OrderTests

@@ -55,9 +55,9 @@ namespace RichDomainStore.Sales.Data
                 }
             }
 
-            var success = await base.SaveChangesAsync().ConfigureAwait(false) > 0;
+            var success = await base.SaveChangesAsync().ConfigureAwait(continueOnCapturedContext: false) > 0;
 
-            if (success) 
+            if (success)
             {
                 await _mediatorHandler.PublishEventsAsync(this).ConfigureAwait(continueOnCapturedContext: false);
             }

@@ -7,11 +7,11 @@ using RichDomainStore.Catalog.Domain.Entities;
 using RichDomainStore.Catalog.Domain.Events;
 using RichDomainStore.Catalog.Domain.Interfaces;
 using RichDomainStore.Catalog.Domain.Services;
-using RichDomainStore.Catalog.Domain.Tests.Fixtures;
+using RichDomainStore.Catalog.UnitTests.Fixtures;
 using RichDomainStore.Core.Communication.Mediator;
 using Xunit;
 
-namespace RichDomainStore.Catalog.Domain.Tests.Services
+namespace RichDomainStore.Catalog.UnitTests.Domain.Services
 {
     [Collection(nameof(ProductCollection))]
     public class StockServiceTests

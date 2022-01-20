@@ -58,36 +58,36 @@ namespace RichDomainStore.Sales.Domain.Entities
         {
             RuleFor(c => c.Code)
                .NotEmpty()
-               .WithMessage("Voucher code cannot be empty.");
+               .WithMessage("Voucher code cannot be empty");
 
             RuleFor(c => c.ExpirationDate)
                 .Must(ExpirationDateGreaterThanActual)
-                .WithMessage("Voucher is expired.");
+                .WithMessage("Voucher is expired");
 
             RuleFor(c => c.Active)
                 .Equal(true)
-                .WithMessage("Voucher is not valid.");
+                .WithMessage("Voucher is not valid");
 
             RuleFor(c => c.Used)
                 .Equal(false)
-                .WithMessage("Voucher has already been used.");
+                .WithMessage("Voucher has already been used");
 
             RuleFor(c => c.Quantity)
                 .GreaterThan(0)
-                .WithMessage("Voucher not available.");
+                .WithMessage("Voucher not available");
 
             When(f => f.DiscountType == VoucherDiscountType.Value, () =>
             {
                 RuleFor(f => f.DiscountValue)
                     .GreaterThan(0)
-                    .WithMessage("Voucher discount value must be greather than 0.");
+                    .WithMessage("Voucher discount value must be greather than 0");
             });
 
             When(f => f.DiscountType == VoucherDiscountType.Percentage, () =>
             {
                 RuleFor(f => f.DiscountPercentage)
                     .GreaterThan(0)
-                    .WithMessage("Voucher discount percentage must be greather than 0.");
+                    .WithMessage("Voucher discount percentage must be greather than 0");
             });
         }
 

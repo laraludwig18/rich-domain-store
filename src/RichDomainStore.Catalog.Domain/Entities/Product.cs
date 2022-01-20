@@ -1,4 +1,5 @@
 using System;
+using RichDomainStore.Catalog.Domain.ValueObjects;
 using RichDomainStore.Core.DomainObjects;
 
 namespace RichDomainStore.Catalog.Domain.Entities

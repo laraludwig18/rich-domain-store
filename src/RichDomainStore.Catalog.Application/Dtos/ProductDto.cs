@@ -22,11 +22,11 @@ namespace RichDomainStore.Catalog.Application.Dtos
 
         public int StockQuantity { get; set; }
 
-        public int Height { get; set; }
+        public decimal Height { get; set; }
 
-        public int Width { get; set; }
+        public decimal Width { get; set; }
 
-        public int Depth { get; set; }
+        public decimal Depth { get; set; }
 
         public CategoryDto Category { get; set; }
     }

@@ -33,12 +33,12 @@ namespace RichDomainStore.Sales.Application.Handlers
 
             var order = await _orderRepository.GetDraftOrderByCustomerIdAsync(message.CustomerId)
                 .ConfigureAwait(continueOnCapturedContext: false);
-            
+
             var orderItem = new OrderItem(
-                    productId: message.ProductId,
-                    productName: message.ProductName,
-                    quantity: message.Quantity,
-                    value: message.Value);
+                productId: message.ProductId,
+                productName: message.ProductName,
+                quantity: message.Quantity,
+                value: message.Value);
 
             order = order == null
                 ? CreateNewDraftOrder(message.CustomerId, orderItem)
@@ -80,6 +80,8 @@ namespace RichDomainStore.Sales.Application.Handlers
             {
                 _orderRepository.AddItem(orderItem);
             }
+
+            _orderRepository.Update(order);
 
             order.AddEvent(new OrderUpdatedEvent(order.CustomerId, order.Id, order.TotalValue));
 

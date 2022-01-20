@@ -7,7 +7,9 @@ namespace RichDomainStore.Catalog.Application.Validators
     {
         public UpdateStockValidator()
         {
-            RuleFor(p => p.Quantity).GreaterThanOrEqualTo(1);
+            RuleFor(p => p.Quantity)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage("Quantity must be greather than 1");
         }
     }
 }

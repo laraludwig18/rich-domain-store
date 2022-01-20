@@ -2,7 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RichDomainStore.Core\RichDomainStore.Core.csproj" />
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>$(MsBuildProjectName).Tests</_Parameter1>
+      <_Parameter1>RichDomainStore.Sales.UnitTests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 

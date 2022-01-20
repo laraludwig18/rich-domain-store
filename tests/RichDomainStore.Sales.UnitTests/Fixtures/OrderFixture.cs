@@ -4,7 +4,7 @@ using RichDomainStore.Sales.Domain.Entities;
 using RichDomainStore.Sales.Domain.Enums;
 using Xunit;
 
-namespace RichDomainStore.Sales.Domain.Tests.Fixtures
+namespace RichDomainStore.Sales.UnitTests.Fixtures
 {
     [CollectionDefinition(nameof(OrderCollection))]
     public class OrderCollection : ICollectionFixture<OrderFixture>
