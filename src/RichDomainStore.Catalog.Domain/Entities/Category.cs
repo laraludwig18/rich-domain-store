@@ -28,7 +28,7 @@ namespace RichDomainStore.Catalog.Domain.Entities
         private void Validate()
         {
             AssertionConcern.AssertArgumentNotEmpty(Name, "Category name cannot be empty");
-            AssertionConcern.AssertArgumentEquals(Code, 0, "Category code cannot be equal to 0");
+            AssertionConcern.AssertArgumentNotEquals(Code, 0, "Category code cannot be equal to 0");
         }
     }
 }

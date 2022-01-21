@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RichDomainStore.API.Configurations;
+using RichDomainStore.Catalog.Data;
+using RichDomainStore.Core.Extensions;
+using RichDomainStore.Payments.Data;
+using RichDomainStore.Sales.Data;
 
 namespace RichDomainStore.API
 {
@@ -54,6 +60,21 @@ namespace RichDomainStore.API
             });
 
             app.UseSwaggerSetup();
+
+            ApplyMigrations(app.ApplicationServices);
+        }
+
+        [Conditional("DEBUG")]
+        private static void ApplyMigrations(IServiceProvider applicationServices)
+        {
+            var serviceScopeFactory = applicationServices.GetRequiredService<IServiceScopeFactory>();
+
+            using (var serviceScope = serviceScopeFactory.CreateScope())
+            {
+                serviceScope.ServiceProvider.ApplyMigrations<SalesContext>();
+                serviceScope.ServiceProvider.ApplyMigrations<CatalogContext>();
+                serviceScope.ServiceProvider.ApplyMigrations<PaymentContext>();
+            }
         }
     }
 }

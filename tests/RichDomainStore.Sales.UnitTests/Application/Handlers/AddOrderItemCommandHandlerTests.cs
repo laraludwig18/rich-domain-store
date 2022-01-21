@@ -39,10 +39,10 @@ namespace RichDomainStore.Sales.UnitTests.Application.Handlers
                 .Setup(r => r.UnitOfWork.CommitAsync())
                 .ReturnsAsync(true);
 
-            _validCommand = _addOrderItemCommandFixture.GenerateValidCommand();
+            _validCommand = _addOrderItemCommandFixture.GenerateValidCommand(itemQuantity: OrderItem.MinItemQuantity);
 
             _draftOrder = _orderFixture.GenerateDraftOrder();
-            _validOrderItem = _orderFixture.GenerateValidOrderItem();
+            _validOrderItem = _orderFixture.GenerateValidOrderItem(itemQuantity: OrderItem.MinItemQuantity);
             _draftOrder.AddItem(_validOrderItem);
         }
 
@@ -80,7 +80,9 @@ namespace RichDomainStore.Sales.UnitTests.Application.Handlers
         public async Task Handle_ExistingItemOnDraftOrder_ShouldExecuteSuccessfully()
         {
             // Arrange
-            var command = _addOrderItemCommandFixture.GenerateValidCommand(_validOrderItem.ProductId);
+            var command = _addOrderItemCommandFixture.GenerateValidCommand(
+                productId: _validOrderItem.ProductId,
+                itemQuantity: 1);
 
             _mocker.GetMock<IOrderRepository>()
                 .Setup(r => r.GetDraftOrderByCustomerIdAsync(It.IsAny<Guid>()))

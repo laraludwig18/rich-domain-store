@@ -17,7 +17,10 @@ namespace RichDomainStore.Sales.UnitTests.Fixtures
             return Order.OrderFactory.NewDraft(customerId: Guid.NewGuid());
         }
 
-        public OrderItem GenerateValidOrderItem(Guid productId = default(Guid), int itemQuantity = 1, decimal value = 1)
+        public OrderItem GenerateValidOrderItem(
+            Guid productId = default(Guid), 
+            int itemQuantity = OrderItem.MinItemQuantity, 
+            decimal value = 1)
         {
             return new Faker<OrderItem>("pt_BR")
                 .CustomInstantiator(faker => new OrderItem(

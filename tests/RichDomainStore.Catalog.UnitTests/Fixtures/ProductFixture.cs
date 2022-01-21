@@ -19,7 +19,7 @@ namespace RichDomainStore.Catalog.UnitTests.Fixtures
                     name: faker.Commerce.ProductName(),
                     description: faker.Random.Words(),
                     active: faker.Random.Bool(),
-                    value: faker.Finance.Amount(1, decimal.MaxValue),
+                    value: faker.Finance.Amount(min: 1),
                     categoryId: Guid.NewGuid(),
                     image: faker.Image.PicsumUrl(),
                     dimensions: new Dimensions(height: 1, width: 1, depth: 1)));

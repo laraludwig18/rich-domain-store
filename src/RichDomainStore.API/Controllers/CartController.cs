@@ -82,7 +82,7 @@ namespace RichDomainStore.API.Controllers
                 return BadRequest("Product not found");
             }
 
-            var command = new RemoveOrderItemCommand(CustomerId, id);
+            var command = new RemoveOrderItemCommand(customerId: CustomerId, productId: id);
             await _mediatorHandler.SendCommandAsync(command);
 
             if (IsValidOperation())
@@ -105,7 +105,11 @@ namespace RichDomainStore.API.Controllers
                 return BadRequest("Product not found");
             }
 
-            var command = new UpdateOrderItemCommand(CustomerId, id, request.Quantity);
+            var command = new UpdateOrderItemCommand(
+                customerId: CustomerId,
+                productId: id,
+                quantity: request.Quantity);
+
             await _mediatorHandler.SendCommandAsync(command);
 
             if (IsValidOperation())
