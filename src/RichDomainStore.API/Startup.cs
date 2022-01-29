@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,7 +63,6 @@ namespace RichDomainStore.API
             ApplyMigrations(app.ApplicationServices);
         }
 
-        [Conditional("DEBUG")]
         private static void ApplyMigrations(IServiceProvider applicationServices)
         {
             var serviceScopeFactory = applicationServices.GetRequiredService<IServiceScopeFactory>();
