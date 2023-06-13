@@ -1,39 +1,39 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{37B477F2-E5A9-470D-A488-25DA0E045039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Catalog.Data", "src\RichDomainStore.Catalog.Data\RichDomainStore.Catalog.Data.csproj", "{F60A06B4-D86A-431E-98DE-C9353395C5A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Catalog.Data", "src\RichDomainStore.Catalog.Data\RichDomainStore.Catalog.Data.csproj", "{F60A06B4-D86A-431E-98DE-C9353395C5A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Catalog.Domain", "src\RichDomainStore.Catalog.Domain\RichDomainStore.Catalog.Domain.csproj", "{DFBDDF89-19BA-4DFE-BC8C-30A712F03ACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Catalog.Domain", "src\RichDomainStore.Catalog.Domain\RichDomainStore.Catalog.Domain.csproj", "{DFBDDF89-19BA-4DFE-BC8C-30A712F03ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Catalog.Application", "src\RichDomainStore.Catalog.Application\RichDomainStore.Catalog.Application.csproj", "{035FD007-458F-4EC2-B352-01054B612766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Catalog.Application", "src\RichDomainStore.Catalog.Application\RichDomainStore.Catalog.Application.csproj", "{035FD007-458F-4EC2-B352-01054B612766}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AE3706B-5811-46FF-8BFB-885252717E46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Sales.Domain", "src\RichDomainStore.Sales.Domain\RichDomainStore.Sales.Domain.csproj", "{995048A0-8BFE-476F-9C67-D11FD8A2BC75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Sales.Domain", "src\RichDomainStore.Sales.Domain\RichDomainStore.Sales.Domain.csproj", "{995048A0-8BFE-476F-9C67-D11FD8A2BC75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Sales.Application", "src\RichDomainStore.Sales.Application\RichDomainStore.Sales.Application.csproj", "{27C12A3B-BA12-4EDB-9850-C1AF9F5759BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Sales.Application", "src\RichDomainStore.Sales.Application\RichDomainStore.Sales.Application.csproj", "{27C12A3B-BA12-4EDB-9850-C1AF9F5759BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Sales.Data", "src\RichDomainStore.Sales.Data\RichDomainStore.Sales.Data.csproj", "{23DF4691-447B-4D2D-9823-B32525D1A55B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Sales.Data", "src\RichDomainStore.Sales.Data\RichDomainStore.Sales.Data.csproj", "{23DF4691-447B-4D2D-9823-B32525D1A55B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.API", "src\RichDomainStore.API\RichDomainStore.API.csproj", "{78AD0378-CF06-41CC-9837-B63A187F04B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.API", "src\RichDomainStore.API\RichDomainStore.API.csproj", "{78AD0378-CF06-41CC-9837-B63A187F04B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Payments.Data", "src\RichDomainStore.Payments.Data\RichDomainStore.Payments.Data.csproj", "{6214F6E1-2824-4B83-804D-DB486794C20A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Payments.Data", "src\RichDomainStore.Payments.Data\RichDomainStore.Payments.Data.csproj", "{6214F6E1-2824-4B83-804D-DB486794C20A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Payments.AntiCorruption", "src\RichDomainStore.Payments.AntiCorruption\RichDomainStore.Payments.AntiCorruption.csproj", "{72A150DA-B56D-4532-9DBB-AA9C45542572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Payments.AntiCorruption", "src\RichDomainStore.Payments.AntiCorruption\RichDomainStore.Payments.AntiCorruption.csproj", "{72A150DA-B56D-4532-9DBB-AA9C45542572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Payments.Business", "src\RichDomainStore.Payments.Business\RichDomainStore.Payments.Business.csproj", "{0B0871B8-72E0-4494-A944-DB73AE63BBD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Payments.Business", "src\RichDomainStore.Payments.Business\RichDomainStore.Payments.Business.csproj", "{0B0871B8-72E0-4494-A944-DB73AE63BBD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "src\EventSourcing\EventSourcing.csproj", "{BE17CAD0-5AAA-4F45-930B-0D278B231AF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Sales.UnitTests", "tests\RichDomainStore.Sales.UnitTests\RichDomainStore.Sales.UnitTests.csproj", "{FA1664B5-67F2-4F89-B6E5-7C24CAF087E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Sales.UnitTests", "tests\RichDomainStore.Sales.UnitTests\RichDomainStore.Sales.UnitTests.csproj", "{FA1664B5-67F2-4F89-B6E5-7C24CAF087E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.Catalog.UnitTests", "tests\RichDomainStore.Catalog.UnitTests\RichDomainStore.Catalog.UnitTests.csproj", "{AB80B2CA-351E-4667-AE7F-EDF2606E2066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.Catalog.UnitTests", "tests\RichDomainStore.Catalog.UnitTests\RichDomainStore.Catalog.UnitTests.csproj", "{AB80B2CA-351E-4667-AE7F-EDF2606E2066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichDomainStore.API.IntegrationTests", "tests\RichDomainStore.API.IntegrationTests\RichDomainStore.API.IntegrationTests.csproj", "{F7ABD78C-28E6-4561-A115-CC28AEF88631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichDomainStore.API.IntegrationTests", "tests\RichDomainStore.API.IntegrationTests\RichDomainStore.API.IntegrationTests.csproj", "{F7ABD78C-28E6-4561-A115-CC28AEF88631}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

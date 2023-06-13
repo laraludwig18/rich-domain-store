@@ -1,5 +1,4 @@
 using System;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,7 +34,7 @@ namespace RichDomainStore.API
 
             services.AddSwaggerConfiguration();
 
-            services.AddMediatR(typeof(Startup));
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Startup>());
 
             services.AddDependencyInjectionConfiguration();
         }
